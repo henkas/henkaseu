@@ -1,49 +1,62 @@
 ---
 import { getCollection } from 'astro:content';
-import WorkCard from './WorkCard.astro';
 
 const entries = await getCollection('work');
-const sorted = entries.sort((a, b) => a.data.order - b.data.order);
+const sorted = entries
+  .filter((e) => e.data.order <= 2)
+  .sort((a, b) => a.data.order - b.data.order);
 ---
 
-<section id="work" class="work-section">
-  <div class="section-card">
-    <div class="section-header">
-      <div class="section-label-group">
-        <span class="section-num">03</span>
-        <p class="label">Work experience</p>
+<div id="work" class="bento-card bento-span-2 work-tile">
+  <div class="bento-card-label">Work</div>
+  <div class="work-items">
+    {sorted.map((entry, i) => (
+      <div class:list={['work-item', { 'work-item--past': i > 0 }]}>
+        <div class="work-role">{entry.data.role}</div>
+        <div class="work-company">{entry.data.company}</div>
+        <div class="work-period">{entry.data.period}</div>
       </div>
-    </div>
-    <div class="work-list">
-      {sorted.map((entry, i) => (
-        <WorkCard
-          company={entry.data.company}
-          role={entry.data.role}
-          period={entry.data.period}
-          description={entry.data.description}
-          tags={entry.data.tags}
-          isCurrent={i === 0}
-          isDimmed={entry.data.order >= 3}
-        />
-      ))}
-    </div>
+    ))}
   </div>
-</section>
+</div>
 
 <style>
-  .work-section {
-    max-width: 900px;
-    margin: 20px auto 0;
-    padding: 0 20px;
-  }
-
-  .section-header {
-    margin-bottom: 20px;
-  }
-
-  .work-list {
+  .work-items {
     display: flex;
-    flex-direction: column;
     gap: 12px;
+  }
+
+  .work-item {
+    flex: 1;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+
+  .work-role {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+
+  .work-company {
+    font-size: 13px;
+    color: var(--accent-light);
+    margin-bottom: 2px;
+  }
+
+  .work-period {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .work-item--past .work-role { color: #aaaacc; }
+  .work-item--past .work-company { color: #7b68ee; }
+  .work-item--past { border-color: var(--border-subtle); }
+
+  @media (max-width: 700px) {
+    .work-items { flex-direction: column; }
   }
 </style>

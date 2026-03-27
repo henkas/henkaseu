@@ -1,87 +1,54 @@
 ---
 // Photos will be real images once available.
-// For now, placeholders with approximate aspect ratios.
 ---
 
-<section id="photography" class="photo-section">
-  <div class="section-card">
-    <div class="photo-header">
-      <div class="section-label-group">
-        <span class="section-num">05</span>
-        <p class="label">Photography</p>
-      </div>
-      <a
-        href="https://photo.henkas.eu"
-        target="_blank"
-        rel="noopener"
-        class="btn-ghost photo-link"
-      >
-        photo.henkas.eu ↗
-      </a>
-    </div>
-
-    <div class="photo-grid">
-      <!-- Replace src values with real photos -->
-      <div class="photo-thumb photo-thumb--placeholder"></div>
-      <div class="photo-thumb photo-thumb--placeholder"></div>
-      <div class="photo-thumb photo-thumb--placeholder"></div>
-    </div>
-
-    <p class="photo-caption">Landscapes, urban, and whatever catches my eye.</p>
+<div id="photography" class="bento-card photo-tile">
+  <div class="bento-card-label">Photography</div>
+  <div class="photo-thumbs">
+    <div class="photo-thumb photo-thumb--placeholder"></div>
+    <div class="photo-thumb photo-thumb--placeholder"></div>
   </div>
-</section>
+  <p class="photo-caption">Landscapes, urban, and whatever catches my eye.</p>
+  <a
+    href="https://photo.henkas.eu"
+    target="_blank"
+    rel="noopener"
+    class="photo-link"
+  >
+    photo.henkas.eu ↗
+  </a>
+</div>
 
 <style>
-  .photo-section {
-    max-width: 900px;
-    margin: 20px auto 0;
-    padding: 0 20px;
-  }
-
-  .photo-header {
+  .photo-tile {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
+    flex-direction: column;
   }
-
-  .photo-link {
-    font-size: 12px;
-    padding: 5px 12px;
+  .photo-thumbs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+    flex: 1;
   }
-
-  .photo-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
-  }
-
   .photo-thumb {
+    flex: 1;
     aspect-ratio: 4/3;
     border-radius: 6px;
     overflow: hidden;
   }
-
-  .photo-thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
   .photo-thumb--placeholder {
     background: var(--bg-hover);
     border: 1px solid var(--border);
   }
-
   .photo-caption {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--text-muted);
-    margin: 14px 0 0;
+    margin: 0 0 8px;
   }
-
-  @media (max-width: 500px) {
-    .photo-grid {
-      grid-template-columns: 1fr;
-    }
+  .photo-link {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent-light);
+    text-decoration: none;
   }
 </style>

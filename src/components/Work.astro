@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import WorkCard from './WorkCard.astro';
+
+const entries = await getCollection('work');
+const sorted = entries.sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="work" class="work-section">
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-label-group">
+        <span class="section-num">03</span>
+        <p class="label">Work experience</p>
+      </div>
+    </div>
+    <div class="work-list">
+      {sorted.map((entry, i) => (
+        <WorkCard
+          company={entry.data.company}
+          role={entry.data.role}
+          period={entry.data.period}
+          description={entry.data.description}
+          tags={entry.data.tags}
+          isCurrent={i === 0}
+          isDimmed={entry.data.order >= 3}
+        />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .work-section {
+    max-width: 900px;
+    margin: 20px auto 0;
+    padding: 0 20px;
+  }
+
+  .section-header {
+    margin-bottom: 20px;
+  }
+
+  .work-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+</style>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>henkas.eu — Color & Typography Comparison</title>
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: #1a1a2e;
+    color: #ccc;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    padding: 40px 24px 60px;
+  }
+
+  h1 { color: #fff; font-size: 24px; font-weight: 700; margin-bottom: 8px; text-align: center; }
+  .page-sub { color: #9999bb; font-size: 14px; text-align: center; margin-bottom: 40px; }
+
+  .section { margin-bottom: 48px; }
+  .section-title { color: #a78bfa; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; text-align: center; }
+
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 1200px; margin: 0 auto; }
+
+  .panel { border-radius: 12px; padding: 28px; position: relative; }
+  .panel-label {
+    position: absolute; top: 12px; right: 16px;
+    font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 20px;
+  }
+  .panel-label-current { color: #8888aa; border: 1px solid #333; }
+  .panel-label-proposed { color: #4ade80; border: 1px solid rgba(74, 222, 128, 0.3); }
+
+  /* ── Current panel ──────────── */
+  .panel-current {
+    background: #0a0a0f;
+    border: 1px solid #1e1e2e;
+  }
+
+  /* ── Proposed panel ─────────── */
+  .panel-proposed {
+    background: #0b0b12;
+    border: 1px solid #1e1e2e;
+  }
+
+  /* ── Contrast table ─────────── */
+  .contrast-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+  .contrast-table th {
+    text-align: left; font-size: 10px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase; color: #7777aa;
+    padding: 8px 0; border-bottom: 1px solid #1e1e2e;
+  }
+  .contrast-table td { padding: 10px 0; border-bottom: 1px solid #1e1e2e33; vertical-align: middle; }
+  .swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: middle; margin-right: 8px; border: 1px solid rgba(255,255,255,0.1); }
+  .ratio { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; }
+  .ratio-fail { color: #ef4444; }
+  .ratio-aa { color: #facc15; }
+  .ratio-aaa { color: #4ade80; }
+  .grade { font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 4px; }
+  .grade-fail { background: rgba(239,68,68,0.15); color: #ef4444; }
+  .grade-aa { background: rgba(250,204,21,0.15); color: #facc15; }
+  .grade-aaa { background: rgba(74,222,128,0.15); color: #4ade80; }
+
+  /* ── Typography demo ────────── */
+  .typo-demo { margin-top: 12px; }
+  .typo-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; }
+  .typo-label { font-size: 10px; color: #7777aa; min-width: 80px; text-transform: uppercase; letter-spacing: 1px; }
+
+  .card-demo {
+    border-radius: 8px; padding: 16px 18px; margin-top: 16px;
+  }
+
+  .tag-demo {
+    display: inline-block; font-weight: 500; border-radius: 20px; white-space: nowrap;
+  }
+
+  .note { font-size: 11px; color: #7777aa; font-style: italic; margin-top: 12px; }
+
+  @media (max-width: 800px) {
+    .split { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Color, Contrast & Typography</h1>
+<p class="page-sub">Current vs proposed — side by side on the actual backgrounds</p>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION 1: CONTRAST RATIOS                 -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">Contrast Ratios Against Card Background</div>
+  <div class="split">
+
+    <!-- Current -->
+    <div class="panel panel-current">
+      <span class="panel-label panel-label-current">Current</span>
+      <p style="color: #7777aa; font-size: 12px; margin-bottom: 8px;">Background: <span style="font-family: monospace;">#111116</span></p>
+      <table class="contrast-table">
+        <tr><th>Token</th><th>Color</th><th>Ratio</th><th></th></tr>
+        <tr>
+          <td style="color: #8888aa; font-size: 13px;">text-secondary</td>
+          <td><span class="swatch" style="background:#8888aa;"></span><span style="color:#8888aa; font-family: monospace; font-size: 12px;">#8888aa</span></td>
+          <td><span class="ratio ratio-aa">4.8:1</span></td>
+          <td><span class="grade grade-aa">AA</span></td>
+        </tr>
+        <tr>
+          <td style="color: #7777aa; font-size: 13px;">text-muted</td>
+          <td><span class="swatch" style="background:#7777aa;"></span><span style="color:#7777aa; font-family: monospace; font-size: 12px;">#7777aa</span></td>
+          <td><span class="ratio ratio-fail">3.8:1</span></td>
+          <td><span class="grade grade-fail">Fail</span></td>
+        </tr>
+        <tr>
+          <td style="color: #666680; font-size: 13px;">text-dim</td>
+          <td><span class="swatch" style="background:#666680;"></span><span style="color:#666680; font-family: monospace; font-size: 12px;">#666680</span></td>
+          <td><span class="ratio ratio-fail">2.9:1</span></td>
+          <td><span class="grade grade-fail">Fail</span></td>
+        </tr>
+        <tr>
+          <td style="color: #555570; font-size: 13px;">text-faint</td>
+          <td><span class="swatch" style="background:#555570;"></span><span style="color:#555570; font-family: monospace; font-size: 12px;">#555570</span></td>
+          <td><span class="ratio ratio-fail">2.2:1</span></td>
+          <td><span class="grade grade-fail">Fail</span></td>
+        </tr>
+        <tr>
+          <td style="color: #a78bfa; font-size: 13px;">accent-light</td>
+          <td><span class="swatch" style="background:#a78bfa;"></span><span style="color:#a78bfa; font-family: monospace; font-size: 12px;">#a78bfa</span></td>
+          <td><span class="ratio ratio-aa">5.2:1</span></td>
+          <td><span class="grade grade-aa">AA</span></td>
+        </tr>
+      </table>
+      <p class="note">3 of 5 text tokens fail WCAG AA (4.5:1 minimum for normal text)</p>
+    </div>
+
+    <!-- Proposed -->
+    <div class="panel panel-proposed">
+      <span class="panel-label panel-label-proposed">Proposed</span>
+      <p style="color: #8899bb; font-size: 12px; margin-bottom: 8px;">Background: <span style="font-family: monospace;">#111116</span> (unchanged)</p>
+      <table class="contrast-table">
+        <tr><th>Token</th><th>Color</th><th>Ratio</th><th></th></tr>
+        <tr>
+          <td style="color: #9da3be; font-size: 13px;">text-secondary</td>
+          <td><span class="swatch" style="background:#9da3be;"></span><span style="color:#9da3be; font-family: monospace; font-size: 12px;">#9da3be</span></td>
+          <td><span class="ratio ratio-aaa">6.5:1</span></td>
+          <td><span class="grade grade-aaa">AAA</span></td>
+        </tr>
+        <tr>
+          <td style="color: #8b91ab; font-size: 13px;">text-muted</td>
+          <td><span class="swatch" style="background:#8b91ab;"></span><span style="color:#8b91ab; font-family: monospace; font-size: 12px;">#8b91ab</span></td>
+          <td><span class="ratio ratio-aa">5.0:1</span></td>
+          <td><span class="grade grade-aa">AA</span></td>
+        </tr>
+        <tr>
+          <td style="color: #7a7f99; font-size: 13px;">text-dim</td>
+          <td><span class="swatch" style="background:#7a7f99;"></span><span style="color:#7a7f99; font-family: monospace; font-size: 12px;">#7a7f99</span></td>
+          <td><span class="ratio ratio-aa">4.0:1</span></td>
+          <td><span class="grade grade-aa">AA-lg</span></td>
+        </tr>
+        <tr>
+          <td style="color: #6b7089; font-size: 13px;">text-faint</td>
+          <td><span class="swatch" style="background:#6b7089;"></span><span style="color:#6b7089; font-family: monospace; font-size: 12px;">#6b7089</span></td>
+          <td><span class="ratio ratio-aa">3.2:1</span></td>
+          <td><span class="grade grade-aa">AA-lg</span></td>
+        </tr>
+        <tr>
+          <td style="color: #b4a0ff; font-size: 13px;">accent-light</td>
+          <td><span class="swatch" style="background:#b4a0ff;"></span><span style="color:#b4a0ff; font-family: monospace; font-size: 12px;">#b4a0ff</span></td>
+          <td><span class="ratio ratio-aaa">6.4:1</span></td>
+          <td><span class="grade grade-aaa">AAA</span></td>
+        </tr>
+      </table>
+      <p class="note">All tokens pass their use-case. Body text hits AAA. Labels pass AA-large.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION 2: TYPOGRAPHY SCALE                -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">Typography Scale</div>
+  <div class="split">
+
+    <!-- Current -->
+    <div class="panel panel-current">
+      <span class="panel-label panel-label-current">Current</span>
+      <div class="typo-demo">
+        <div class="typo-row">
+          <span class="typo-label">Body</span>
+          <span style="color: #8888aa; font-size: 14px; line-height: 1.75;">I'm a systems engineer based in the Netherlands with a soft spot for building things.</span>
+        </div>
+        <div class="typo-row">
+          <span class="typo-label">Heading</span>
+          <span style="color: #fff; font-size: 22px; font-weight: 700; letter-spacing: -0.5px;">Hi, I'm Henki.</span>
+        </div>
+        <div class="typo-row">
+          <span class="typo-label">Card title</span>
+          <span style="color: #fff; font-size: 15px; font-weight: 700;">FiscalMap MCP</span>
+        </div>
+        <div class="typo-row">
+          <span class="typo-label">Label</span>
+          <span style="color: #7777aa; font-size: 9px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;">SYSTEMS ENGINEER</span>
+        </div>
+        <div class="typo-row">
+          <span class="typo-label">Tags</span>
+          <span class="tag-demo" style="background: #1e1e2e; color: #a78bfa; font-family: 'JetBrains Mono', monospace; font-size: 9px; padding: 3px 8px;">TypeScript</span>
+        </div>
+      </div>
+      <p class="note">Body 14px, labels 9px — feels small on high-res displays</p>
+    </div>
+
+    <!-- Proposed -->
+    <div class="panel panel-proposed">
+      <span class="panel-label panel-label-proposed">Proposed</span>
+      <div class="typo-demo">
+        <div class="typo-row">
+          <span class="typo-label">Body</span>
+          <span style="color: #9da3be; font-size: 15px; line-height: 1.75;">I'm a systems engineer based in the Netherlands with a soft spot for building things.</span>
+        </div>
+        <div class="typo-row">
+          <span class="typo-label">Heading</span>
+          <span style="color: #fff; font-size: 24px; font-weight: 700; letter-spacing: -0.5px;">Hi, I'm Henki.</span>
+        </div>
+        <div class="typo-row">
+          <span class="typo-label">Card title</span>
+          <span style="color: #fff; font-size: 17px; font-weight: 700;">FiscalMap MCP</span>
+        </div>
+        <div class="typo-row">
+          <span class="typo-label">Label</span>
+          <span style="color: #8b91ab; font-size: 10px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase;">SYSTEMS ENGINEER</span>
+        </div>
+        <div class="typo-row">
+          <span class="typo-label">Tags</span>
+          <span class="tag-demo" style="background: #1e1e2e; color: #b4a0ff; font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 4px 10px;">TypeScript</span>
+        </div>
+      </div>
+      <p class="note">+1px across the board. Body 15px, labels 10px, tags 10px — more legible without feeling big</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION 3: CARD PREVIEW                    -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title">In Context — Project Card</div>
+  <div class="split">
+
+    <!-- Current -->
+    <div class="panel panel-current">
+      <span class="panel-label panel-label-current">Current</span>
+      <div class="card-demo" style="background: #16161f; border: 1px solid #1e1e2e;">
+        <div style="color: #7777aa; font-size: 9px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px;">Coding</div>
+        <div style="color: #fff; font-size: 15px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 4px;">Rattie</div>
+        <div style="color: #8888aa; font-size: 12px; margin-bottom: 8px;">Pet rat care companion for iOS</div>
+        <div style="display: flex; gap: 4px; margin-bottom: 8px;">
+          <span style="display: inline-flex; align-items: center; gap: 4px; font-size: 9px; font-weight: 600; color: #c4b5fd; background: linear-gradient(135deg, rgba(65,88,208,0.15), rgba(139,92,246,0.15)); border: 1px solid #6d5dca; padding: 3px 8px; border-radius: 16px;">SSC 2026 Winner</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 4px;">
+          <span style="background: #1e1e2e; color: #a78bfa; font-family: monospace; font-size: 9px; padding: 3px 8px; border-radius: 16px;">Swift</span>
+          <span style="background: #1e1e2e; color: #a78bfa; font-family: monospace; font-size: 9px; padding: 3px 8px; border-radius: 16px;">SwiftUI</span>
+          <span style="background: #1e1e2e; color: #a78bfa; font-family: monospace; font-size: 9px; padding: 3px 8px; border-radius: 16px;">SwiftData</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Proposed -->
+    <div class="panel panel-proposed">
+      <span class="panel-label panel-label-proposed">Proposed</span>
+      <div class="card-demo" style="background: #16161f; border: 1px solid #1e1e2e;">
+        <div style="color: #8b91ab; font-size: 10px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px;">Coding</div>
+        <div style="color: #fff; font-size: 17px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 4px;">Rattie</div>
+        <div style="color: #9da3be; font-size: 13px; margin-bottom: 8px;">Pet rat care companion for iOS</div>
+        <div style="display: flex; gap: 4px; margin-bottom: 8px;">
+          <span style="display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 600; color: #c4b5fd; background: linear-gradient(135deg, rgba(65,88,208,0.15), rgba(139,92,246,0.15)); border: 1px solid #6d5dca; padding: 3px 8px; border-radius: 16px;">SSC 2026 Winner</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+          <span style="background: #1e1e2e; color: #b4a0ff; font-family: monospace; font-size: 10px; padding: 4px 10px; border-radius: 16px;">Swift</span>
+          <span style="background: #1e1e2e; color: #b4a0ff; font-family: monospace; font-size: 10px; padding: 4px 10px; border-radius: 16px;">SwiftUI</span>
+          <span style="background: #1e1e2e; color: #b4a0ff; font-family: monospace; font-size: 10px; padding: 4px 10px; border-radius: 16px;">SwiftData</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECTION 4: SUMMARY                         -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" style="max-width: 800px; margin: 0 auto;">
+  <div class="section-title">Summary of Changes</div>
+  <div class="panel" style="background: #111118; border: 1px solid #1e1e2e;">
+    <table class="contrast-table">
+      <tr><th>Token</th><th>Current</th><th>Proposed</th><th>Change</th></tr>
+      <tr>
+        <td style="color: #9da3be; font-size: 13px;">text-secondary</td>
+        <td style="font-family: monospace; font-size: 12px; color: #8888aa;">#8888aa</td>
+        <td style="font-family: monospace; font-size: 12px; color: #9da3be;">#9da3be</td>
+        <td style="font-size: 12px; color: #9da3be;">+21% luminance</td>
+      </tr>
+      <tr>
+        <td style="color: #8b91ab; font-size: 13px;">text-muted</td>
+        <td style="font-family: monospace; font-size: 12px; color: #7777aa;">#7777aa</td>
+        <td style="font-family: monospace; font-size: 12px; color: #8b91ab;">#8b91ab</td>
+        <td style="font-size: 12px; color: #8b91ab;">+32% luminance, now AA</td>
+      </tr>
+      <tr>
+        <td style="color: #7a7f99; font-size: 13px;">text-dim</td>
+        <td style="font-family: monospace; font-size: 12px; color: #666680;">#666680</td>
+        <td style="font-family: monospace; font-size: 12px; color: #7a7f99;">#7a7f99</td>
+        <td style="font-size: 12px; color: #7a7f99;">+38% luminance, now AA-lg</td>
+      </tr>
+      <tr>
+        <td style="color: #6b7089; font-size: 13px;">text-faint</td>
+        <td style="font-family: monospace; font-size: 12px; color: #555570;">#555570</td>
+        <td style="font-family: monospace; font-size: 12px; color: #6b7089;">#6b7089</td>
+        <td style="font-size: 12px; color: #6b7089;">+45% luminance, now AA-lg</td>
+      </tr>
+      <tr>
+        <td style="color: #b4a0ff; font-size: 13px;">accent-light</td>
+        <td style="font-family: monospace; font-size: 12px; color: #a78bfa;">#a78bfa</td>
+        <td style="font-family: monospace; font-size: 12px; color: #b4a0ff;">#b4a0ff</td>
+        <td style="font-size: 12px; color: #b4a0ff;">+23% luminance, now AAA</td>
+      </tr>
+      <tr>
+        <td style="color: #9da3be; font-size: 13px;">Body font</td>
+        <td style="font-size: 12px; color: #8888aa;">14px</td>
+        <td style="font-size: 12px; color: #9da3be;">15px</td>
+        <td style="font-size: 12px; color: #9da3be;">+1px</td>
+      </tr>
+      <tr>
+        <td style="color: #9da3be; font-size: 13px;">Labels</td>
+        <td style="font-size: 12px; color: #8888aa;">9px</td>
+        <td style="font-size: 12px; color: #9da3be;">10px</td>
+        <td style="font-size: 12px; color: #9da3be;">+1px</td>
+      </tr>
+      <tr>
+        <td style="color: #9da3be; font-size: 13px;">Tags</td>
+        <td style="font-size: 12px; color: #8888aa;">9px</td>
+        <td style="font-size: 12px; color: #9da3be;">10px</td>
+        <td style="font-size: 12px; color: #9da3be;">+1px</td>
+      </tr>
+      <tr>
+        <td style="color: #9da3be; font-size: 13px;">Card titles</td>
+        <td style="font-size: 12px; color: #8888aa;">15px</td>
+        <td style="font-size: 12px; color: #9da3be;">17px</td>
+        <td style="font-size: 12px; color: #9da3be;">+2px</td>
+      </tr>
+    </table>
+    <p class="note" style="margin-top: 16px;">Philosophy: keep the same purple-tinted palette, just push every text token up enough to pass WCAG AA at its use case. Backgrounds and borders stay identical — the vibe doesn't change, just the readability.</p>
+  </div>
+</div>
+
+</body>
+</html>

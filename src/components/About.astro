@@ -1,0 +1,146 @@
+---
+import { getCollection } from 'astro:content';
+
+const [projects, workEntries] = await Promise.all([
+  getCollection('projects'),
+  getCollection('work'),
+]);
+
+const usedTags = new Set([
+  ...projects.flatMap((p) => p.data.tags),
+  ...workEntries.flatMap((e) => e.data.tags),
+]);
+
+const groupDefs = [
+  {
+    label: 'Languages',
+    candidates: ['TypeScript', 'JavaScript', 'Python', 'Swift', 'PHP', 'Go', 'Rust', 'Bash'],
+  },
+  {
+    label: 'Frontend',
+    candidates: ['SwiftUI', 'React', 'Astro', 'Vue', 'Next.js', 'Angular'],
+  },
+  {
+    label: 'Infrastructure',
+    candidates: [
+      'Linux', 'RHEL', 'Windows Server', 'Proxmox', 'VMware ESXi',
+      'Docker', 'Kubernetes', 'Ansible', 'Active Directory',
+    ],
+  },
+  {
+    label: 'Tooling',
+    candidates: [
+      'PostgreSQL', 'Cloudflare', 'Git', 'Node.js',
+      'Microsoft 365', 'Entra ID', 'Intune', 'Microsoft Defender', 'Purview',
+      'Oracle Cloud', 'Microsoft Azure', 'AWS', 'SharePoint', 'Teams',
+    ],
+  },
+  {
+    label: 'Compliance & ITSM',
+    candidates: [
+      'ISO 27001', 'ITIL', 'ServiceNow', 'ServiceDesk Plus',
+      'Incident Response', 'Autosys', 'RCA',
+    ],
+  },
+];
+
+const stackGroups = groupDefs
+  .map((g) => ({ label: g.label, tags: g.candidates.filter((t) => usedTags.has(t)) }))
+  .filter((g) => g.tags.length > 0);
+---
+
+<section id="about" class="about-section">
+  <div class="section-card">
+    <div class="section-label-group" style="margin-bottom: 20px;">
+      <span class="section-num">01</span>
+      <p class="label">About</p>
+    </div>
+    <div class="about-grid">
+      <!-- Left: bio -->
+      <div class="about-bio">
+        <h2 class="about-heading">Hi, I'm Henki.</h2>
+        <p>
+	I'm a systems engineer currently based in the Netherlands with a soft spot for building
+	things that solve real problems - whether that's a transit app for the 1.6M expats who
+	can't read Dutch departure boards, or a self-hosted tool that does one thing, runs on
+	your own hardware, and never asks a SaaS platform for permission.
+        </p>
+        <p>
+	Outside of work I run a homelab, obsess over systems that run unattended, and occasionally
+	get sidetracked building iOS apps for my pet rats. I care about simplicity, ownership and
+	tools that don't phone home.
+        </p>
+        <p>
+	If you're working on something interesting - or just want to talk homelab topology, transit
+	APIs, or why most software does too much and asks too much in return - you know where to find me.
+        </p>
+      </div>
+
+      <!-- Right: stack -->
+      <div class="about-stack">
+        <p class="label">Stack &amp; tools</p>
+        {stackGroups.map((group) => (
+          <div class="stack-group">
+            <p class="label stack-group-label">{group.label}</p>
+            <div class="stack-tags">
+              {group.tags.map((t) => <span class="tag">{t}</span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-section {
+    max-width: 900px;
+    margin: 20px auto 0;
+    padding: 0 20px;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .about-heading {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--text-primary);
+    margin: 0 0 16px;
+  }
+
+  .about-bio p {
+    margin: 0 0 14px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+  }
+
+  .about-bio p:last-child {
+    margin-bottom: 0;
+  }
+
+  .about-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 2px;
+  }
+
+  .stack-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  @media (max-width: 700px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,86 @@
+---
+// No props — Nav is static
+---
+
+<header class="nav-wrapper">
+  <nav class="nav-inner">
+    <a href="/" class="nav-wordmark">henkas.eu</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#work">Work</a>
+      <a href="#certifications">Certs</a>
+      <a href="#photography">Photos</a>
+      <a href="#contact" class="nav-cta">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .nav-wrapper {
+    position: sticky;
+    top: 12px;
+    z-index: 50;
+    padding: 0 20px;
+    pointer-events: none;
+  }
+
+  .nav-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: #111116cc;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    pointer-events: all;
+  }
+
+  .nav-wordmark {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: -0.3px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .nav-links a:hover {
+    color: var(--text-primary);
+  }
+
+  .nav-cta {
+    background: linear-gradient(135deg, var(--accent), var(--accent-light));
+    color: #fff !important;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 600 !important;
+  }
+
+  .nav-cta:hover {
+    opacity: 0.9;
+  }
+
+  @media (max-width: 600px) {
+    .nav-links a:not(.nav-cta) {
+      display: none;
+    }
+  }
+</style>

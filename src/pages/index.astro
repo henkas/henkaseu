@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Projects from '../components/Projects.astro';
+import Work from '../components/Work.astro';
+import Certifications from '../components/Certifications.astro';
+import Photography from '../components/Photography.astro';
+import Contact from '../components/Contact.astro';
+
+import '../styles/global.css';
+---
+
+<Base
+  title="Henki Papp"
+  description="Henki Papp - Systems Engineer based in Europe. Infrastructure, tools, and the occasional side project worth building."
+>
+  <Nav />
+  <main>
+    <Hero />
+    <About />
+    <Projects />
+    <Work />
+    <Certifications />
+    <Photography />
+    <Contact />
+  </main>
+</Base>

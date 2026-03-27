@@ -1,0 +1,119 @@
+---
+interface Props {
+  company: string;
+  role: string;
+  period: string;
+  description: string;
+  tags: string[];
+  isCurrent: boolean;
+  isDimmed: boolean;
+}
+
+const { company, role, period, description, tags, isCurrent, isDimmed } = Astro.props;
+---
+
+<div class:list={['work-card', { 'work-card--past': !isCurrent, 'work-card--dim': isDimmed }]}>
+  <!-- Header row: role + period -->
+  <div class="work-header">
+    <span class="work-role">{role}</span>
+    <span class="work-period">{period}</span>
+  </div>
+
+  <!-- Company -->
+  <p class="work-company">{company}</p>
+
+  <!-- Body: description + tags -->
+  <div class="work-body">
+    <p class="work-desc">{description}</p>
+    <div class="work-tags">
+      {tags.slice(0, 6).map((t) => (
+        <span class:list={['tag', { 'tag-muted': !isCurrent }]}>{t}</span>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .work-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .work-card--past {
+    border-color: var(--border-subtle);
+  }
+
+  .work-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .work-role {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+  }
+
+  .work-card--past .work-role {
+    color: #aaaacc;
+  }
+
+  .work-period {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .work-card--past .work-period {
+    color: var(--text-faint);
+  }
+
+  .work-company {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-light);
+    margin: 0;
+  }
+
+  .work-card--past .work-company {
+    color: var(--accent);
+  }
+
+  .work-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .work-desc {
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .work-card--past .work-desc {
+    color: var(--text-dim);
+  }
+
+  .work-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .work-card--dim .work-role    { font-size: 14px; opacity: 0.7; }
+  .work-card--dim .work-company { opacity: 0.7; }
+  .work-card--dim .work-desc    { opacity: 0.7; }
+  .work-card--dim .work-period  { opacity: 0.7; }
+  .work-card--dim .tag          { opacity: 0.65; }
+</style>

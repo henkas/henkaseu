@@ -1,0 +1,110 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  isModal: boolean;
+}
+
+const { project, isModal } = Astro.props;
+const { Content } = await project.render();
+
+const { title, description, tags, category, status, date, links, milestones, award } = project.data;
+
+function formatDate(s: string): string {
+  const [year, month] = s.split('-');
+  const names = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',
+  ];
+  return `${names[+month - 1]} ${year}`;
+}
+
+const statusLabel: Record<string, string> = {
+  active: 'Active',
+  completed: 'Completed',
+  archived: 'Archived',
+};
+
+const statusColor: Record<string, string> = {
+  active: 'var(--color-active)',
+  completed: 'var(--accent-light)',
+  archived: 'var(--text-muted)',
+};
+
+const milestoneIcon: Record<string, string> = {
+  done: '✓',
+  active: '⟳',
+  upcoming: '○',
+};
+---
+
+<div class="detail-main">
+  <!-- Back link -->
+  {isModal
+    ? <a href="/" class="back-link" data-modal-back>← Projects</a>
+    : <a href="/#projects" class="back-link">← Projects</a>
+  }
+
+  <!-- Project header -->
+  <div class="detail-header">
+    <div class="detail-meta">
+      <span class="label detail-category">{category}</span>
+      <span class="detail-date">{formatDate(date)}</span>
+      <span class="detail-status" style={`color: ${statusColor[status]}`}>
+        {statusLabel[status]}
+      </span>
+    </div>
+
+    <h1 class="detail-title">{title}</h1>
+    <p class="detail-description">{description}</p>
+  </div>
+
+  {award?.badge ? (
+    <div class="detail-award">
+      <img src={award.badge} alt={award.name} class="detail-award-img" width="280" height="280" />
+    </div>
+  ) : (
+    <div class="detail-screenshot">
+      <span>Screenshot coming soon</span>
+    </div>
+  )}
+
+  <!-- External links -->
+  {(links?.github || links?.live) && (
+    <div class="detail-links">
+      {links.live && (
+        <a href={links.live} target="_blank" rel="noopener" class="btn-primary">
+          Live site ↗
+        </a>
+      )}
+      {links.github && (
+        <a href={links.github} target="_blank" rel="noopener" class="btn-ghost">
+          GitHub ↗
+        </a>
+      )}
+    </div>
+  )}
+
+  <!-- Tags -->
+  <div class="detail-tags">
+    {tags.map((t) => <span class="tag">{t}</span>)}
+  </div>
+
+  <!-- Markdown content -->
+  <article class="detail-content">
+    <Content />
+  </article>
+
+  <!-- Milestones -->
+  {milestones && milestones.length > 0 && (
+    <div class="milestones">
+      {milestones.map((m) => (
+        <div class:list={['milestone', `milestone--${m.state}`]}>
+          <span class="milestone-icon">{milestoneIcon[m.state]}</span>
+          <span>{m.text}</span>
+        </div>
+      ))}
+    </div>
+  )}
+</div>

@@ -5,116 +5,98 @@ const allCerts = await getCollection('certifications');
 const certs = allCerts.sort((a, b) => a.data.order - b.data.order);
 ---
 
-<section id="certifications" class="certs-section">
-  <div class="section-card">
-    <div class="section-label-group" style="margin-bottom: 20px;">
-      <span class="section-num">04</span>
-      <p class="label">Certifications</p>
-    </div>
-    <div class="certs-grid">
-      {certs.map((cert) => (
-        <div class:list={['surface-card cert-card', { 'cert-card--pending': cert.data.status === 'in-progress' }]}>
-          {cert.data.badge_image
-            ? <img src={cert.data.badge_image} alt={cert.data.name} class="cert-badge-img" width="48" height="48" />
-            : <div class="cert-badge-placeholder"></div>
-          }
-          <div class="cert-info">
-            <p class="cert-name">{cert.data.name}</p>
-            <p class="cert-issuer">{cert.data.issuer}</p>
-            {cert.data.status === 'active' && cert.data.issued && (
-              <p class="cert-issued">{cert.data.issued}</p>
-            )}
-            {cert.data.status === 'in-progress' && (
-              <span class="label cert-pending-label">In progress</span>
-            )}
-            {cert.data.status === 'active' && cert.data.credly_url && (
-              <a href={cert.data.credly_url} target="_blank" rel="noopener" class="btn-ghost cert-verify">
-                Verify ↗
-              </a>
-            )}
-          </div>
+<div id="achievements" class="bento-card achievements-tile">
+  <div class="bento-card-label">Achievements</div>
+  <div class="cert-items">
+    {certs.map((cert) => (
+      <div class:list={['cert-item', { 'cert-item--pending': cert.data.status === 'in-progress' }]}>
+        {cert.data.badge_image
+          ? <img src={cert.data.badge_image} alt={cert.data.name} class="cert-badge-img" width="36" height="36" />
+          : <div class="cert-badge-placeholder"></div>
+        }
+        <div class="cert-info">
+          <p class="cert-name">{cert.data.name}</p>
+          <p class="cert-issuer">{cert.data.issuer}</p>
+          {cert.data.status === 'active' && cert.data.credly_url && (
+            <a href={cert.data.credly_url} target="_blank" rel="noopener" class="cert-verify">
+              Verify ↗
+            </a>
+          )}
+          {cert.data.status === 'in-progress' && (
+            <span class="label cert-pending-label">In progress</span>
+          )}
         </div>
-      ))}
-    </div>
+      </div>
+    ))}
   </div>
-</section>
+</div>
 
 <style>
-  .certs-section {
-    max-width: 900px;
-    margin: 20px auto 0;
-    padding: 0 20px;
-  }
-
-  .certs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 12px;
-  }
-
-  .cert-card {
+  .cert-items {
     display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 16px 20px;
+    flex-direction: column;
+    gap: 8px;
   }
-
-  .cert-card--pending {
-    opacity: 0.55;
+  .cert-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
   }
-
+  .cert-item--pending { opacity: 0.55; }
   .cert-badge-img {
-    width: 48px;
-    height: 48px;
+    width: 36px;
+    height: 36px;
     flex-shrink: 0;
     border-radius: 6px;
     object-fit: contain;
   }
-
   .cert-badge-placeholder {
-    width: 48px;
-    height: 48px;
+    width: 36px;
+    height: 36px;
     flex-shrink: 0;
     background: var(--bg-hover);
     border: 1px dashed var(--border);
     border-radius: 6px;
   }
-
   .cert-info {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
     min-width: 0;
   }
-
   .cert-name {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     color: var(--text-primary);
     margin: 0;
     line-height: 1.4;
   }
-
   .cert-issuer {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--accent-light);
     margin: 0;
   }
-
-  .cert-issued {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin: 0;
-  }
-
-  .cert-pending-label {
-    color: var(--text-dim);
-  }
-
   .cert-verify {
     align-self: flex-start;
-    font-size: 11px;
-    padding: 4px 10px;
-    margin-top: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-top: 2px;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .cert-verify:hover {
+    border-color: var(--accent);
+    color: var(--text-primary);
+  }
+  .cert-pending-label {
+    color: var(--text-dim);
   }
 </style>

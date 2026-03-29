@@ -2,6 +2,7 @@
 title: Rattie
 description: A pet rat care companion app for iOS. Tracks weight, health, vet visits, medications, and journal entries — with an on-device AI (Apple Intelligence) that can answer care questions without ever sending data to a server. Winner of Apple's Swift Student Challenge 2026.
 tagline: "Pet rat care companion for iOS"
+icon: /rattie.png
 tags: [Swift, SwiftUI, SwiftData, Foundation Models, iOS]
 status: completed
 category: coding

@@ -1,0 +1,92 @@
+---
+import { getCollection } from 'astro:content';
+
+const [projects, workEntries] = await Promise.all([
+  getCollection('projects'),
+  getCollection('work'),
+]);
+
+const usedTags = new Set([
+  ...projects.flatMap((p) => p.data.tags),
+  ...workEntries.flatMap((e) => e.data.tags),
+]);
+
+const groupDefs = [
+  {
+    label: 'Cloud & Storage',
+    candidates: [
+      'Oracle Cloud', 'Microsoft Azure', 'AWS', 'Hybrid Cloud',
+      'Oracle ZFS', 'Object Storage', 'HSM / QStar',
+    ],
+  },
+  {
+    label: 'Tooling',
+    candidates: [
+      'Node.js', 'Hono', 'SQLite', 'Cloudflare', 'Cloudflare Pages',
+      'Tailwind CSS', 'MCP', 'Autosys', 'Runbook Authoring',
+    ],
+  },
+  {
+    label: 'Compliance & ITSM',
+    candidates: [
+      'ISO 27001', 'ITIL', 'ServiceNow', 'ServiceDesk Plus',
+      'Incident Response', 'RCA', 'Endpoint Management',
+    ],
+  },
+  {
+    label: 'Microsoft 365',
+    candidates: [
+      'Microsoft 365', 'Entra ID', 'Intune', 'Microsoft Defender',
+      'Microsoft 365 Defender', 'Purview', 'SharePoint', 'Teams',
+      'Autopilot', 'OSDCloud',
+    ],
+  },
+];
+
+const stackGroups = groupDefs
+  .map((g) => ({ label: g.label, tags: g.candidates.filter((t) => usedTags.has(t)) }))
+  .filter((g) => g.tags.length > 0);
+---
+
+<div class="bento-card more-tools-tile">
+  <div class="bento-card-label">More tools</div>
+  {stackGroups.map((group) => (
+    <div class="stack-group">
+      <p class="stack-group-label">{group.label}</p>
+      <div class="stack-tags">
+        {group.tags.map((t) => <span class="tag">{t}</span>)}
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .more-tools-tile {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .stack-group {
+    margin-bottom: 12px;
+  }
+
+  .stack-group:last-child {
+    margin-bottom: 0;
+  }
+
+  .stack-group-label {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin: 0 0 5px;
+  }
+
+  .stack-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+</style>

@@ -6,6 +6,7 @@ const projects = defineCollection({
     title: z.string(),
     description: z.string(),
     tagline: z.string().optional(),
+    icon: z.string().optional(),
     tags: z.array(z.string()),
     status: z.enum(['active', 'completed', 'archived']),
     category: z.enum(['sysadmin', 'coding', 'hobby']),

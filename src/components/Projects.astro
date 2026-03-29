@@ -31,6 +31,7 @@ const nonFeatured = projects.filter((p) => !p.data.featured);
     links={featured.data.links}
     award={featured.data.award}
     tagline={featured.data.tagline}
+    icon={featured.data.icon}
   />
 )}
 {nonFeatured.map((p) => (
@@ -45,6 +46,7 @@ const nonFeatured = projects.filter((p) => !p.data.featured);
     links={p.data.links}
     award={p.data.award}
     tagline={p.data.tagline}
+    icon={p.data.icon}
   />
 ))}
 

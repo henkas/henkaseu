@@ -2,6 +2,7 @@
 title: nstop
 description: Real-time Dutch transit for English speakers. nstop watches your calendar and the live transit network so you always know exactly when to leave. Built for the ~1.6M English-speaking expats in the Netherlands.
 tagline: "Real-time Dutch transit for expats"
+icon: /nstop.png
 tags: [Swift, SwiftUI, iOS, NDOV, Transit API]
 status: active
 category: coding

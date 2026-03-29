@@ -1,14 +1,16 @@
 ---
-// Photos will be real images once available.
+// Real photos from public/
 ---
 
-<div id="photography" class="bento-card photo-tile">
+<div id="photography" class="bento-card bento-span-2 photo-tile">
   <div class="bento-card-label">Photography</div>
-  <div class="photo-thumbs">
-    <div class="photo-thumb photo-thumb--placeholder"></div>
-    <div class="photo-thumb photo-thumb--placeholder"></div>
+  <div class="photo-grid">
+    <img src="/photo-puppy.jpg"  alt="Rat portrait"   class="photo-thumb" />
+    <img src="/photo-plane.jpg"  alt="Aerial view"    class="photo-thumb" />
+    <img src="/photo-puppy2.jpg" alt="Rat close-up"   class="photo-thumb" />
+    <img src="/photo-plane2.jpg" alt="Plane window"   class="photo-thumb" />
   </div>
-  <p class="photo-caption">Landscapes, urban, and whatever catches my eye.</p>
+  <p class="photo-caption">Pets, skylines, and whatever catches my eye.</p>
   <a
     href="https://photo.henkas.eu"
     target="_blank"
@@ -24,21 +26,18 @@
     display: flex;
     flex-direction: column;
   }
-  .photo-thumbs {
-    display: flex;
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 6px;
-    margin-bottom: 10px;
     flex: 1;
+    margin-bottom: 10px;
   }
   .photo-thumb {
-    flex: 1;
+    width: 100%;
     aspect-ratio: 4/3;
+    object-fit: cover;
     border-radius: 6px;
-    overflow: hidden;
-  }
-  .photo-thumb--placeholder {
-    background: var(--bg-hover);
-    border: 1px solid var(--border);
   }
   .photo-caption {
     font-size: 12px;

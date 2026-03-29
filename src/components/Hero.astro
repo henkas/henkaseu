@@ -1,6 +1,5 @@
 ---
-// Hero is now just name + tagline + actions.
-// Status cards moved to About sidebar.
+// Hero: name + tagline + actions (left) | stat strip (right)
 ---
 
 <section id="hero" class="hero-section">
@@ -26,6 +25,21 @@
       </div>
     </div>
   </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="stat-value">5+</span>
+      <span class="stat-label">Years in production infra</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-value">5</span>
+      <span class="stat-label">Projects shipped</span>
+    </div>
+    <div class="hero-stat">
+      <span class="stat-value">2</span>
+      <span class="stat-label">iOS apps</span>
+    </div>
+  </div>
 </section>
 
 <style>
@@ -33,6 +47,10 @@
     max-width: 1400px;
     margin: 48px auto 0;
     padding: 0 24px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 40px;
   }
 
   .hero-content {
@@ -86,6 +104,45 @@
 
   .hero-icon-link:hover {
     color: var(--text-primary);
+  }
+
+  /* ── Stat strip ── */
+  .hero-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 20px;
+    flex-shrink: 0;
+    padding-bottom: 2px; /* align baseline with button row */
+  }
+
+  .hero-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
+  }
+
+  .stat-value {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1;
+    color: var(--text-primary);
+  }
+
+  .stat-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  @media (max-width: 900px) {
+    .hero-stats {
+      display: none;
+    }
   }
 
   @media (max-width: 700px) {

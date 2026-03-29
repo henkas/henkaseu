@@ -10,99 +10,122 @@ const certs = allCerts.sort((a, b) => a.data.order - b.data.order);
   <div class="cert-grid">
     {certs.map((cert) => (
       <div class:list={['cert-item', { 'cert-item--pending': cert.data.status === 'in-progress' }]}>
-        {cert.data.badge_image
-          ? <img src={cert.data.badge_image} alt={cert.data.name} class="cert-badge-img" width="44" height="44" />
-          : <div class="cert-badge-placeholder"></div>
-        }
-        <div class="cert-info">
-          <p class="cert-name">{cert.data.name}</p>
-          <p class="cert-issuer">{cert.data.issuer}</p>
-          {cert.data.status === 'active' && cert.data.credly_url && (
-            <a href={cert.data.credly_url} target="_blank" rel="noopener" class="cert-verify">
-              Verify ↗
-            </a>
-          )}
-          {cert.data.status === 'in-progress' && (
-            <span class="label cert-pending-label">In progress</span>
-          )}
+        <div class="cert-badge-wrap">
+          {cert.data.badge_image
+            ? <img src={cert.data.badge_image} alt={cert.data.name} class="cert-badge-img" />
+            : <div class="cert-badge-placeholder"></div>
+          }
         </div>
+        <p class="cert-name">{cert.data.name}</p>
+        <p class="cert-issuer">{cert.data.issuer}</p>
+        {cert.data.status === 'active' && cert.data.credly_url && (
+          <a href={cert.data.credly_url} target="_blank" rel="noopener" class="cert-verify">
+            Verify ↗
+          </a>
+        )}
+        {cert.data.status === 'in-progress' && (
+          <span class="label cert-pending-label">In progress</span>
+        )}
       </div>
     ))}
   </div>
 </div>
 
 <style>
-  .cert-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  .cert-item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    background: var(--bg-surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px 16px;
-  }
-  .cert-item--pending { opacity: 0.55; }
-  .cert-badge-img {
-    width: 44px;
-    height: 44px;
-    flex-shrink: 0;
-    border-radius: 8px;
-    object-fit: contain;
-  }
-  .cert-badge-placeholder {
-    width: 44px;
-    height: 44px;
-    flex-shrink: 0;
-    background: var(--bg-hover);
-    border: 1px dashed var(--border);
-    border-radius: 8px;
-  }
-  .cert-info {
+  .achievements-tile {
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    min-width: 0;
   }
+
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    flex: 1;
+  }
+
+  .cert-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px 16px 20px;
+    transition: border-color 0.15s;
+  }
+
+  .cert-item:hover {
+    border-color: var(--accent);
+  }
+
+  .cert-item--pending {
+    opacity: 0.5;
+  }
+
+  .cert-badge-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+  }
+
+  .cert-badge-img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 10px;
+  }
+
+  .cert-badge-placeholder {
+    width: 80px;
+    height: 80px;
+    background: var(--bg-hover);
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+  }
+
   .cert-name {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     color: var(--text-primary);
     margin: 0;
     line-height: 1.4;
   }
+
   .cert-issuer {
     font-size: 11px;
     color: var(--accent-light);
     margin: 0;
   }
+
   .cert-verify {
-    align-self: flex-start;
     font-size: 10px;
     font-weight: 600;
     color: var(--text-secondary);
     text-decoration: none;
     border: 1px solid var(--border);
-    padding: 2px 8px;
+    padding: 3px 10px;
     border-radius: 12px;
-    margin-top: 2px;
     transition: border-color 0.15s, color 0.15s;
   }
+
   .cert-verify:hover {
     border-color: var(--accent);
     color: var(--text-primary);
   }
+
   .cert-pending-label {
     color: var(--text-dim);
+    margin-top: -4px;
   }
 
   @media (max-width: 1100px) {
     .cert-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 </style>

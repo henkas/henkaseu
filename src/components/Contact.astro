@@ -70,23 +70,49 @@ const linkedin = 'https://linkedin.com/in/henkipapp';
         ></textarea>
       </div>
       <button type="submit" class="btn-primary form-submit">Send message</button>
+      <p id="form-status" class="form-status"></p>
     </form>
 
   </div>
 </div>
 
 <script>
-  const form = document.getElementById('contact-form') as HTMLFormElement | null;
-  form?.addEventListener('submit', (e) => {
+  const form    = document.getElementById('contact-form') as HTMLFormElement | null;
+  const status  = document.getElementById('form-status') as HTMLElement | null;
+  const submitBtn = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
+
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const email   = (form.elements.namedItem('email')   as HTMLInputElement).value;
-    const subject = (form.elements.namedItem('subject') as HTMLInputElement).value;
-    const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value;
-    const body    = `From: ${email}\n\n${message}`;
-    window.location.href =
-      `mailto:henkas@henkas.eu` +
-      `?subject=${encodeURIComponent(subject)}` +
-      `&body=${encodeURIComponent(body)}`;
+    if (!submitBtn) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+    if (status) { status.textContent = ''; status.className = 'form-status'; }
+
+    try {
+      const res  = await fetch('/api/contact', { method: 'POST', body: new FormData(form) });
+      const data = await res.json() as { ok: boolean; error?: string };
+
+      if (data.ok) {
+        form.reset();
+        if (status) {
+          status.textContent = 'Message sent — I\'ll get back to you soon.';
+          status.className = 'form-status form-status--ok';
+        }
+        submitBtn.textContent = 'Send message';
+        submitBtn.disabled = false;
+      } else {
+        throw new Error(data.error ?? 'Unknown error');
+      }
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Something went wrong.';
+      if (status) {
+        status.textContent = msg;
+        status.className = 'form-status form-status--err';
+      }
+      submitBtn.textContent = 'Send message';
+      submitBtn.disabled = false;
+    }
   });
 </script>
 
@@ -197,6 +223,15 @@ const linkedin = 'https://linkedin.com/in/henkipapp';
     align-self: flex-start;
     margin-top: 4px;
   }
+
+  .form-status {
+    font-size: 12px;
+    margin: 0;
+    min-height: 1em;
+  }
+
+  .form-status--ok  { color: var(--color-active); }
+  .form-status--err { color: #f87171; }
 
   @media (max-width: 1100px) {
     .contact-inner {

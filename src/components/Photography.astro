@@ -2,20 +2,20 @@
 // Real photos from public/
 ---
 
-<div id="photography" class="bento-card bento-span-2 photo-tile">
+<div id="photography" class="bento-card photo-tile">
   <div class="bento-card-label">Photography</div>
-  <div class="photo-grid">
-    <div class="photo-cell">
-      <img src="/photo-puppy.jpg"  alt="Rat portrait"  class="photo-thumb" />
+  <div class="photo-collage">
+    <div class="photo-frame photo-frame--1">
+      <img src="/photo-puppy.jpg" alt="Dog with toy" />
     </div>
-    <div class="photo-cell">
-      <img src="/photo-plane.jpg"  alt="Aerial view"   class="photo-thumb" />
+    <div class="photo-frame photo-frame--2">
+      <img src="/photo-plane.jpg" alt="Aircraft on approach" />
     </div>
-    <div class="photo-cell">
-      <img src="/photo-pupp2.jpg" alt="Rat close-up"  class="photo-thumb" />
+    <div class="photo-frame photo-frame--3">
+      <img src="/photo-pupp2.jpg" alt="Dog close-up" />
     </div>
-    <div class="photo-cell">
-      <img src="/photo-plane2.jpg" alt="Plane window"  class="photo-thumb" />
+    <div class="photo-frame photo-frame--4">
+      <img src="/photo-plane2.jpg" alt="Transavia aircraft" />
     </div>
   </div>
   <div class="photo-footer">
@@ -40,29 +40,75 @@
     flex-direction: column;
   }
 
-  .photo-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-    margin-bottom: 10px;
-  }
-
-  .photo-cell {
-    aspect-ratio: 4/3;
+  /* ── Collage ── */
+  .photo-collage {
     position: relative;
-    overflow: hidden;
-    border-radius: 6px;
+    height: 280px;
+    margin-bottom: 14px;
   }
 
-  .photo-thumb {
+  .photo-frame {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.55);
+    border: 2px solid rgba(255, 255, 255, 0.07);
+    transition: transform 0.2s ease, z-index 0s;
+    cursor: default;
   }
 
+  .photo-frame img {
+    display: block;
+    width: 100%;
+    height: auto; /* preserves native aspect ratio — no cropping */
+  }
+
+  .photo-frame:hover {
+    z-index: 10 !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+  }
+
+  /* Top-left: portrait dog — anchored top-left, rotated slightly CCW */
+  .photo-frame--1 {
+    width: 38%;
+    top: 0;
+    left: 0;
+    transform: rotate(-4deg);
+    z-index: 2;
+  }
+  .photo-frame--1:hover { transform: rotate(-4deg) scale(1.05); }
+
+  /* Top-right: plane — anchored top-right, slight CW tilt */
+  .photo-frame--2 {
+    width: 52%;
+    top: 10px;
+    right: 0;
+    transform: rotate(2.5deg);
+    z-index: 1;
+  }
+  .photo-frame--2:hover { transform: rotate(2.5deg) scale(1.04); }
+
+  /* Bottom-left: second plane — anchored bottom-left, slight CW */
+  .photo-frame--3 {
+    width: 50%;
+    bottom: 0;
+    left: 6%;
+    transform: rotate(1.5deg);
+    z-index: 3;
+  }
+  .photo-frame--3:hover { transform: rotate(1.5deg) scale(1.04); }
+
+  /* Bottom-right: second dog — anchored bottom-right, CCW tilt */
+  .photo-frame--4 {
+    width: 36%;
+    bottom: 10px;
+    right: 2%;
+    transform: rotate(-2deg);
+    z-index: 4;
+  }
+  .photo-frame--4:hover { transform: rotate(-2deg) scale(1.06); }
+
+  /* ── Footer ── */
   .photo-footer {
     display: flex;
     align-items: center;
@@ -94,15 +140,11 @@
     transition: color 0.15s;
   }
 
-  .photo-link:hover {
-    color: var(--text-primary);
-  }
+  .photo-link:hover { color: var(--text-primary); }
 
   .photo-link--ig {
     color: var(--text-muted);
   }
 
-  .photo-link--ig:hover {
-    color: #e1306c;
-  }
+  .photo-link--ig:hover { color: #e1306c; }
 </style>

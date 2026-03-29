@@ -69,23 +69,24 @@ const certs = allCerts.sort((a, b) => a.data.order - b.data.order);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 80px;
-    height: 80px;
+    width: 96px;
+    height: 96px;
   }
 
   .cert-badge-img {
-    width: 80px;
-    height: 80px;
+    width: 96px;
+    height: 96px;
     object-fit: contain;
-    border-radius: 10px;
+    border-radius: 12px;
+    image-rendering: -webkit-optimize-contrast; /* crisp at native res */
   }
 
   .cert-badge-placeholder {
-    width: 80px;
-    height: 80px;
+    width: 96px;
+    height: 96px;
     background: var(--bg-hover);
     border: 1px dashed var(--border);
-    border-radius: 10px;
+    border-radius: 12px;
   }
 
   .cert-name {

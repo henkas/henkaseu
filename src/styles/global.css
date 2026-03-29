@@ -177,6 +177,14 @@ body {
   gap: 16px;
 }
 
+/* Bottom row — spans all 4 columns, Photography (5fr) + Contact (3fr) */
+.bottom-row {
+  grid-column: span 4;
+  display: grid;
+  grid-template-columns: 5fr 3fr;
+  gap: 16px;
+}
+
 @media (max-width: 1100px) {
   .bento {
     grid-template-columns: repeat(2, 1fr);
@@ -198,6 +206,10 @@ body {
     grid-column: span 2;
     grid-template-columns: 1fr;
   }
+  .bottom-row {
+    grid-column: span 2;
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 700px) {
@@ -211,7 +223,8 @@ body {
     grid-column: span 1;
   }
   .about-row,
-  .credentials-row {
+  .credentials-row,
+  .bottom-row {
     grid-column: span 1;
   }
 }

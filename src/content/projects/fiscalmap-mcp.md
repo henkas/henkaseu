@@ -8,7 +8,7 @@ category: coding
 featured: false
 date: 2026-03
 links:
-  github: https://github.com/henkipapp/fiscalmap-mcp
+  github: https://github.com/henkas/fiscalmap-mcp
 ---
 
 A Model Context Protocol (MCP) server that exposes 14 tools over the FiscalMap REST API. Connects to Claude Desktop so an LLM can answer international tax questions with live, accurate data rather than hallucinated rates.

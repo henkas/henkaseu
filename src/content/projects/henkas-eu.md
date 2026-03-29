@@ -9,7 +9,7 @@ featured: false
 date: 2026-03
 links:
   live: https://henkas.eu
-  github: https://github.com/henkipapp/henkaseu
+  github: https://github.com/henkas/henkaseu
 ---
 
 Static portfolio site built with Astro. All content is managed as markdown files via Astro Content Collections. Deployed automatically to Cloudflare Pages on push.

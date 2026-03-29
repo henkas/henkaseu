@@ -6,6 +6,11 @@ const [projects, workEntries] = await Promise.all([
   getCollection('work'),
 ]);
 
+// Status card data
+const featured = projects.find((p) => p.data.featured);
+const currentJob = workEntries.find((e) => e.data.order === 1);
+
+// Stack & tools groups
 const usedTags = new Set([
   ...projects.flatMap((p) => p.data.tags),
   ...workEntries.flatMap((e) => e.data.tags),
@@ -49,7 +54,8 @@ const stackGroups = groupDefs
   .filter((g) => g.tags.length > 0);
 ---
 
-<div id="about" class="bento-card bento-span-2 about-tile">
+<!-- About tile (3 columns) -->
+<div id="about" class="bento-card bento-span-3 about-tile">
   <div class="bento-card-label">About</div>
   <h2 class="about-heading">Hi, I'm Henki.</h2>
   <div class="about-bio">
@@ -71,16 +77,44 @@ const stackGroups = groupDefs
   </div>
 </div>
 
-<div class="bento-card bento-span-2 stack-tile">
-  <div class="bento-card-label">Stack &amp; tools</div>
-  {stackGroups.map((group) => (
-    <div class="stack-group">
-      <p class="stack-group-label">{group.label}</p>
-      <div class="stack-tags">
-        {group.tags.map((t) => <span class="tag">{t}</span>)}
+<!-- Sidebar (1 column): status cards + stack -->
+<div class="sidebar-wrapper">
+  <!-- Currently -->
+  <div class="sidebar-card">
+    <p class="bento-card-label">Currently</p>
+    {currentJob && (
+      <>
+        <p class="sidebar-title">{currentJob.data.role}</p>
+        <p class="sidebar-accent">{currentJob.data.company}</p>
+      </>
+    )}
+  </div>
+
+  <!-- Latest project -->
+  {featured && (
+    <div class="sidebar-card">
+      <p class="bento-card-label">Latest project</p>
+      <p class="sidebar-title">{featured.data.title}</p>
+      <div class="sidebar-tags">
+        {featured.data.tags.slice(0, 3).map((tag) => (
+          <span class="tag">{tag}</span>
+        ))}
       </div>
     </div>
-  ))}
+  )}
+
+  <!-- Stack & Tools -->
+  <div class="sidebar-card">
+    <p class="bento-card-label">Stack &amp; tools</p>
+    {stackGroups.map((group) => (
+      <div class="stack-group">
+        <p class="stack-group-label">{group.label}</p>
+        <div class="stack-tags">
+          {group.tags.map((t) => <span class="tag">{t}</span>)}
+        </div>
+      </div>
+    ))}
+  </div>
 </div>
 
 <style>
@@ -103,22 +137,61 @@ const stackGroups = groupDefs
     margin-bottom: 0;
   }
 
+  .sidebar-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sidebar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .sidebar-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .sidebar-accent {
+    font-size: 13px;
+    color: var(--accent-light);
+    margin: 0;
+  }
+
+  .sidebar-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
   .stack-group {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
+  }
+
+  .stack-group:last-child {
+    margin-bottom: 0;
   }
 
   .stack-group-label {
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 500;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--text-dim);
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
 
   .stack-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 4px;
   }
 </style>

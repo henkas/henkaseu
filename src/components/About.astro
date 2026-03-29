@@ -6,8 +6,6 @@ const [projects, workEntries] = await Promise.all([
   getCollection('work'),
 ]);
 
-// Status card data
-const featured = projects.find((p) => p.data.featured);
 const currentJob = workEntries.find((e) => e.data.order === 1);
 
 // Stack & tools groups
@@ -78,19 +76,6 @@ const stackGroups = groupDefs
     )}
   </div>
 
-  <!-- Latest project -->
-  {featured && (
-    <div class="sidebar-card">
-      <p class="bento-card-label">Latest project</p>
-      <p class="sidebar-title">{featured.data.title}</p>
-      <div class="sidebar-tags">
-        {featured.data.tags.slice(0, 3).map((tag) => (
-          <span class="tag">{tag}</span>
-        ))}
-      </div>
-    </div>
-  )}
-
   <!-- Stack & Tools -->
   <div class="sidebar-card">
     <p class="bento-card-label">Stack &amp; tools</p>
@@ -117,9 +102,9 @@ const stackGroups = groupDefs
   }
 
   .about-bio p {
-    margin: 0 0 14px;
-    font-size: 15px;
-    line-height: 1.8;
+    margin: 0 0 12px;
+    font-size: 14px;
+    line-height: 1.7;
     color: var(--text-secondary);
   }
 

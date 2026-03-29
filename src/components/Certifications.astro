@@ -22,7 +22,9 @@ const inProgress = sorted.filter((c) => c.data.status === 'in-progress');
           />
         )}
         <p class="cert-name">{cert.data.name}</p>
-        <p class="cert-issuer">{cert.data.issuer}</p>
+        <p class="cert-issuer">
+          {cert.data.issuer}{cert.data.issued ? ` · ${cert.data.issued}` : ''}
+        </p>
         {cert.data.credly_url && (
           <a href={cert.data.credly_url} target="_blank" rel="noopener" class="cert-verify">
             Verify ↗

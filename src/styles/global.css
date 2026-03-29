@@ -161,6 +161,22 @@ body {
 .bento-span-4 { grid-column: span 4; }
 .bento-span-2-2 { grid-column: span 2; grid-row: span 2; }
 
+/* About row — spans all 4 columns, uses 2:1 inner grid */
+.about-row {
+  grid-column: span 4;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+
+/* Credentials row — spans all 4 columns, uses 3:5 inner grid */
+.credentials-row {
+  grid-column: span 4;
+  display: grid;
+  grid-template-columns: 3fr 5fr;
+  gap: 16px;
+}
+
 @media (max-width: 1100px) {
   .bento {
     grid-template-columns: repeat(2, 1fr);
@@ -174,6 +190,14 @@ body {
   .bento-span-4 {
     grid-column: span 2;
   }
+  .about-row {
+    grid-column: span 2;
+    grid-template-columns: 1fr;
+  }
+  .credentials-row {
+    grid-column: span 2;
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 700px) {
@@ -184,6 +208,10 @@ body {
   .bento-span-3,
   .bento-span-4,
   .bento-span-2-2 {
+    grid-column: span 1;
+  }
+  .about-row,
+  .credentials-row {
     grid-column: span 1;
   }
 }

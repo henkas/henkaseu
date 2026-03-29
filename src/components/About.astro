@@ -16,6 +16,7 @@ const usedTags = new Set([
   ...workEntries.flatMap((e) => e.data.tags),
 ]);
 
+// Sidebar shows only builder-relevant groups; Tooling/Compliance moved to MoreTools card
 const groupDefs = [
   {
     label: 'Languages',
@@ -32,21 +33,6 @@ const groupDefs = [
       'Docker', 'Kubernetes', 'Ansible', 'Active Directory',
     ],
   },
-  {
-    label: 'Tooling',
-    candidates: [
-      'PostgreSQL', 'Cloudflare', 'Git', 'Node.js',
-      'Microsoft 365', 'Entra ID', 'Intune', 'Microsoft Defender', 'Purview',
-      'Oracle Cloud', 'Microsoft Azure', 'AWS', 'SharePoint', 'Teams',
-    ],
-  },
-  {
-    label: 'Compliance & ITSM',
-    candidates: [
-      'ISO 27001', 'ITIL', 'ServiceNow', 'ServiceDesk Plus',
-      'Incident Response', 'Autosys', 'RCA',
-    ],
-  },
 ];
 
 const stackGroups = groupDefs
@@ -54,8 +40,10 @@ const stackGroups = groupDefs
   .filter((g) => g.tags.length > 0);
 ---
 
-<!-- About tile (3 columns) -->
-<div id="about" class="bento-card bento-span-3 about-tile">
+<div class="about-row">
+
+<!-- About tile -->
+<div id="about" class="bento-card about-tile">
   <div class="bento-card-label">About</div>
   <h2 class="about-heading">Hi, I'm Henki.</h2>
   <div class="about-bio">
@@ -116,6 +104,8 @@ const stackGroups = groupDefs
     ))}
   </div>
 </div>
+
+</div><!-- end about-row -->
 
 <style>
   .about-heading {

@@ -36,6 +36,21 @@ const regularProjects = nonFeatured.filter((p) => p.data.cardLayout !== 'wide');
     icon={featured.data.icon}
   />
 )}
+{regularProjects.map((p) => (
+  <ProjectCard
+    title={p.data.title}
+    description={p.data.description}
+    tags={p.data.tags}
+    category={p.data.category}
+    featured={false}
+    slug={p.slug}
+    status={p.data.status}
+    links={p.data.links}
+    award={p.data.award}
+    tagline={p.data.tagline}
+    icon={p.data.icon}
+  />
+))}
 {wideProjects.map((p) => (
   <div class="bento-card wide-project-card bento-span-4" data-category={p.data.category}>
     <div class="wide-project-inner">
@@ -103,21 +118,6 @@ const regularProjects = nonFeatured.filter((p) => p.data.cardLayout !== 'wide');
       </div>
     </div>
   </div>
-))}
-{regularProjects.map((p) => (
-  <ProjectCard
-    title={p.data.title}
-    description={p.data.description}
-    tags={p.data.tags}
-    category={p.data.category}
-    featured={false}
-    slug={p.slug}
-    status={p.data.status}
-    links={p.data.links}
-    award={p.data.award}
-    tagline={p.data.tagline}
-    icon={p.data.icon}
-  />
 ))}
 
 <!-- Modal dialogs (display:none, don't affect grid layout) -->

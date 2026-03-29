@@ -2,57 +2,206 @@
 import { getCollection } from 'astro:content';
 
 const entries = await getCollection('work');
-const sorted = entries
-  .filter((e) => e.data.order <= 2)
-  .sort((a, b) => a.data.order - b.data.order);
+const sorted = entries.sort((a, b) => a.data.order - b.data.order);
 ---
 
 <div id="work" class="bento-card work-tile">
   <div class="bento-card-label">Work</div>
-  <div class="work-items">
+  <div class="work-timeline">
     {sorted.map((entry, i) => (
-      <div class:list={['work-item', { 'work-item--past': i > 0 }]}>
-        <div class="work-role">{entry.data.role}</div>
-        <div class="work-company">{entry.data.company}</div>
-        <div class="work-period">{entry.data.period}</div>
-      </div>
+      <button
+        class:list={['timeline-item', { 'timeline-item--current': i === 0 }]}
+        data-work-slug={entry.slug}
+      >
+        <div class="timeline-left">
+          <span class="timeline-role">{entry.data.role}</span>
+          <span class="timeline-company">{entry.data.company}</span>
+        </div>
+        <div class="timeline-right">
+          <span class="timeline-period">{entry.data.period}</span>
+        </div>
+      </button>
     ))}
   </div>
+  <p class="timeline-hint">Click any role for details</p>
 </div>
 
+{sorted.map((entry) => (
+  <dialog id={`work-modal-${entry.slug}`} class="work-dialog">
+    <button class="dialog-close" aria-label="Close">✕</button>
+    <div class="dialog-scroll">
+      <div class="work-detail">
+        <p class="label work-detail-label">Work Experience</p>
+        <h2 class="work-detail-role">{entry.data.role}</h2>
+        <p class="work-detail-company">{entry.data.company}</p>
+        <p class="work-detail-period">{entry.data.period}</p>
+        <p class="work-detail-desc">{entry.data.description}</p>
+        <div class="work-detail-tags">
+          {entry.data.tags.map((t) => (
+            <span class="tag">{t}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </dialog>
+))}
+
+<script>
+  // Open work modals
+  document.querySelectorAll<HTMLButtonElement>('[data-work-slug]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const slug = btn.dataset.workSlug;
+      const dialog = document.getElementById(`work-modal-${slug}`) as HTMLDialogElement | null;
+      dialog?.showModal();
+    });
+  });
+
+  // Close via button and backdrop
+  document.querySelectorAll<HTMLDialogElement>('.work-dialog').forEach((dialog) => {
+    dialog.querySelector('.dialog-close')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+  });
+</script>
+
 <style>
-  .work-items {
+  .work-timeline {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
   }
 
-  .work-item {
+  .timeline-hint {
+    margin-top: 10px;
+    font-size: 10px;
+    color: var(--text-faint);
+    text-align: center;
+  }
+
+  .timeline-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
     background: var(--bg-surface);
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 14px 16px;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: border-color 0.15s;
+    width: 100%;
   }
 
-  .work-role {
-    font-size: 15px;
+  .timeline-item:hover {
+    border-color: var(--accent);
+  }
+
+  .timeline-item--current {
+    border-color: rgba(123, 104, 238, 0.35);
+  }
+
+  .timeline-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .timeline-role {
+    font-size: 13px;
     font-weight: 600;
     color: var(--text-primary);
-    margin-bottom: 2px;
   }
 
-  .work-company {
-    font-size: 13px;
+  .timeline-company {
+    font-size: 12px;
     color: var(--accent-light);
-    margin-bottom: 2px;
   }
 
-  .work-period {
+  .timeline-right {
+    text-align: right;
+    flex-shrink: 0;
+    padding-left: 12px;
+  }
+
+  .timeline-period {
     font-size: 11px;
     color: var(--text-muted);
   }
 
-  .work-item--past .work-role { color: #aaaacc; }
-  .work-item--past .work-company { color: #7b68ee; }
-  .work-item--past { border-color: var(--border-subtle); }
+  /* Past roles: softer colors */
+  .timeline-item:not(.timeline-item--current) .timeline-role {
+    color: #aaaacc;
+  }
+
+  .timeline-item:not(.timeline-item--current) .timeline-company {
+    color: var(--accent);
+  }
+
+  /* Work dialog */
+  .work-dialog {
+    position: fixed;
+    inset: 0;
+    width: min(680px, 94vw);
+    max-height: 90vh;
+    margin: auto;
+    background: var(--bg-page);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .work-dialog .dialog-scroll {
+    overflow-y: auto;
+    max-height: 90vh;
+  }
+
+  .work-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+  }
+
+  .work-detail {
+    padding: 40px 36px;
+  }
+
+  .work-detail-label {
+    margin-bottom: 16px;
+  }
+
+  .work-detail-role {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--text-primary);
+    margin: 0 0 8px;
+    line-height: 1.2;
+  }
+
+  .work-detail-company {
+    font-size: 15px;
+    color: var(--accent-light);
+    margin: 0 0 4px;
+  }
+
+  .work-detail-period {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0 0 20px;
+  }
+
+  .work-detail-desc {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin: 0 0 20px;
+  }
+
+  .work-detail-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
 </style>

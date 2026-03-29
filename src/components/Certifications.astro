@@ -5,9 +5,9 @@ const allCerts = await getCollection('certifications');
 const certs = allCerts.sort((a, b) => a.data.order - b.data.order);
 ---
 
-<div id="achievements" class="bento-card achievements-tile">
+<div id="achievements" class="bento-card bento-span-2 achievements-tile">
   <div class="bento-card-label">Achievements</div>
-  <div class="cert-items">
+  <div class="cert-grid">
     {certs.map((cert) => (
       <div class:list={['cert-item', { 'cert-item--pending': cert.data.status === 'in-progress' }]}>
         {cert.data.badge_image
@@ -32,9 +32,9 @@ const certs = allCerts.sort((a, b) => a.data.order - b.data.order);
 </div>
 
 <style>
-  .cert-items {
-    display: flex;
-    flex-direction: column;
+  .cert-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 8px;
   }
   .cert-item {
@@ -98,5 +98,11 @@ const certs = allCerts.sort((a, b) => a.data.order - b.data.order);
   }
   .cert-pending-label {
     color: var(--text-dim);
+  }
+
+  @media (max-width: 1100px) {
+    .cert-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

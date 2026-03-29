@@ -4,14 +4,14 @@
 
 :root {
   /* Backgrounds */
-  --bg-page:    #0a0a0f;
-  --bg-card:    #111116;
-  --bg-surface: #16161f;
-  --bg-hover:   #222235;
+  --bg-page:    #181828;
+  --bg-card:    #242440;
+  --bg-surface: #1e1e30;
+  --bg-hover:   #32325a;
 
   /* Borders */
-  --border:        #1e1e2e;
-  --border-subtle: #1a1a28;
+  --border:        #3a3a65;
+  --border-subtle: #32325a;
 
   /* Accent */
   --accent:       #7b68ee;
@@ -20,10 +20,10 @@
 
   /* Text */
   --text-primary:   #ffffff;
-  --text-secondary: #9da3be;
-  --text-muted:     #8b91ab;
-  --text-dim:       #7a7f99;
-  --text-faint:     #6b7089;
+  --text-secondary: #c8cde0;
+  --text-muted:     #a0a0c8;
+  --text-dim:       #9595b8;
+  --text-faint:     #7878a0;
 }
 
 *,
@@ -157,6 +157,7 @@ body {
 
 /* Span utilities */
 .bento-span-2 { grid-column: span 2; }
+.bento-span-3 { grid-column: span 3; }
 .bento-span-4 { grid-column: span 4; }
 .bento-span-2-2 { grid-column: span 2; grid-row: span 2; }
 
@@ -166,6 +167,9 @@ body {
   }
   .bento-span-2-2 {
     grid-row: span 1;
+  }
+  .bento-span-3 {
+    grid-column: span 2;
   }
   .bento-span-4 {
     grid-column: span 2;
@@ -177,6 +181,7 @@ body {
     grid-template-columns: 1fr;
   }
   .bento-span-2,
+  .bento-span-3,
   .bento-span-4,
   .bento-span-2-2 {
     grid-column: span 1;

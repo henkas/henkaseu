@@ -7,7 +7,7 @@ const sorted = entries
   .sort((a, b) => a.data.order - b.data.order);
 ---
 
-<div id="work" class="bento-card bento-span-2 work-tile">
+<div id="work" class="bento-card work-tile">
   <div class="bento-card-label">Work</div>
   <div class="work-items">
     {sorted.map((entry, i) => (
@@ -23,11 +23,11 @@ const sorted = entries
 <style>
   .work-items {
     display: flex;
-    gap: 12px;
+    flex-direction: column;
+    gap: 10px;
   }
 
   .work-item {
-    flex: 1;
     background: var(--bg-surface);
     border: 1px solid var(--border);
     border-radius: 8px;
@@ -55,8 +55,4 @@ const sorted = entries
   .work-item--past .work-role { color: #aaaacc; }
   .work-item--past .work-company { color: #7b68ee; }
   .work-item--past { border-color: var(--border-subtle); }
-
-  @media (max-width: 700px) {
-    .work-items { flex-direction: column; }
-  }
 </style>

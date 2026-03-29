@@ -5,17 +5,19 @@
 <div id="photography" class="bento-card photo-tile">
   <div class="bento-card-label">Photography</div>
   <div class="photo-collage">
-    <div class="photo-frame photo-frame--1">
-      <img src="/photo-puppy.jpg" alt="Dog with toy" />
-    </div>
+    <!-- back row: two landscape planes -->
     <div class="photo-frame photo-frame--2">
       <img src="/photo-plane.jpg" alt="Aircraft on approach" />
     </div>
-    <div class="photo-frame photo-frame--3">
-      <img src="/photo-pupp2.jpg" alt="Dog close-up" />
-    </div>
     <div class="photo-frame photo-frame--4">
       <img src="/photo-plane2.jpg" alt="Transavia aircraft" />
+    </div>
+    <!-- front row: two portrait dogs, slightly overlapping the planes -->
+    <div class="photo-frame photo-frame--1">
+      <img src="/photo-puppy.jpg" alt="Dog with toy" />
+    </div>
+    <div class="photo-frame photo-frame--3">
+      <img src="/photo-pupp2.jpg" alt="Dog close-up" />
     </div>
   </div>
   <div class="photo-footer">
@@ -43,70 +45,75 @@
   /* ── Collage ── */
   .photo-collage {
     position: relative;
-    height: 280px;
+    height: 290px;
     margin-bottom: 14px;
   }
 
   .photo-frame {
     position: absolute;
-    border-radius: 6px;
     overflow: hidden;
-    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.55);
-    border: 2px solid rgba(255, 255, 255, 0.07);
-    transition: transform 0.2s ease, z-index 0s;
+    border-radius: 6px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55);
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: default;
   }
 
   .photo-frame img {
     display: block;
     width: 100%;
-    height: auto; /* preserves native aspect ratio — no cropping */
+    height: 100%;
+    object-fit: cover;
   }
 
   .photo-frame:hover {
     z-index: 10 !important;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7);
   }
 
-  /* Top-left: portrait dog — anchored top-left, rotated slightly CCW */
-  .photo-frame--1 {
-    width: 38%;
-    top: 0;
-    left: 0;
-    transform: rotate(-4deg);
-    z-index: 2;
-  }
-  .photo-frame--1:hover { transform: rotate(-4deg) scale(1.05); }
-
-  /* Top-right: plane — anchored top-right, slight CW tilt */
+  /* Landscape planes — sit in the back, anchored to top */
   .photo-frame--2 {
-    width: 52%;
-    top: 10px;
+    width: 54%;
+    height: 155px;
+    top: 0;
     right: 0;
-    transform: rotate(2.5deg);
+    transform: rotate(2deg);
     z-index: 1;
   }
-  .photo-frame--2:hover { transform: rotate(2.5deg) scale(1.04); }
+  .photo-frame--2:hover { transform: rotate(2deg) scale(1.04); }
 
-  /* Bottom-left: second plane — anchored bottom-left, slight CW */
-  .photo-frame--3 {
+  .photo-frame--4 {
     width: 50%;
+    height: 148px;
+    top: 18px;
+    left: 0;
+    transform: rotate(-1.5deg);
+    z-index: 2;
+  }
+  .photo-frame--4:hover { transform: rotate(-1.5deg) scale(1.04); }
+
+  /* Portrait dogs — sit in front, anchored to bottom, crop shows face */
+  .photo-frame--1 {
+    width: 42%;
+    height: 170px;
     bottom: 0;
-    left: 6%;
-    transform: rotate(1.5deg);
+    left: 4%;
+    transform: rotate(-3deg);
     z-index: 3;
   }
-  .photo-frame--3:hover { transform: rotate(1.5deg) scale(1.04); }
+  .photo-frame--1 img { object-position: center 20%; }
+  .photo-frame--1:hover { transform: rotate(-3deg) scale(1.05); }
 
-  /* Bottom-right: second dog — anchored bottom-right, CCW tilt */
-  .photo-frame--4 {
-    width: 36%;
-    bottom: 10px;
-    right: 2%;
-    transform: rotate(-2deg);
+  .photo-frame--3 {
+    width: 44%;
+    height: 178px;
+    bottom: 4px;
+    right: 3%;
+    transform: rotate(2.5deg);
     z-index: 4;
   }
-  .photo-frame--4:hover { transform: rotate(-2deg) scale(1.06); }
+  .photo-frame--3 img { object-position: center 20%; }
+  .photo-frame--3:hover { transform: rotate(2.5deg) scale(1.05); }
 
   /* ── Footer ── */
   .photo-footer {
@@ -142,9 +149,6 @@
 
   .photo-link:hover { color: var(--text-primary); }
 
-  .photo-link--ig {
-    color: var(--text-muted);
-  }
-
+  .photo-link--ig { color: var(--text-muted); }
   .photo-link--ig:hover { color: #e1306c; }
 </style>

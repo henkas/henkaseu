@@ -13,8 +13,8 @@ const projects = allProjects.sort((a, b) => {
 
 const featured = projects.find((p) => p.data.featured);
 const nonFeatured = projects.filter((p) => !p.data.featured);
-const wideProjects = nonFeatured.filter((p) => p.data.layout === 'wide');
-const regularProjects = nonFeatured.filter((p) => p.data.layout !== 'wide');
+const wideProjects = nonFeatured.filter((p) => p.data.cardLayout === 'wide');
+const regularProjects = nonFeatured.filter((p) => p.data.cardLayout !== 'wide');
 ---
 
 <!-- Anchor for nav -->

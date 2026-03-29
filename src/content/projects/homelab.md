@@ -6,7 +6,7 @@ tags: [Proxmox, Docker, Linux, Mailcow, ZITADEL, Pangolin, Ansible]
 status: active
 category: sysadmin
 featured: false
-layout: "wide"
+cardLayout: "wide"
 date: 2023-01
 ---
 

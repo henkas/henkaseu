@@ -11,7 +11,7 @@ const projects = defineCollection({
     status: z.enum(['active', 'completed', 'archived']),
     category: z.enum(['sysadmin', 'coding', 'hobby']),
     featured: z.boolean().default(false),
-    layout: z.enum(['default', 'wide']).optional(),
+    cardLayout: z.enum(['default', 'wide']).optional(),
     date: z.string(), // YYYY-MM
     links: z
       .object({

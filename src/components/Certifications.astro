@@ -5,13 +5,13 @@ const allCerts = await getCollection('certifications');
 const certs = allCerts.sort((a, b) => a.data.order - b.data.order);
 ---
 
-<div id="achievements" class="bento-card bento-span-2 achievements-tile">
+<div id="achievements" class="bento-card achievements-tile">
   <div class="bento-card-label">Achievements</div>
   <div class="cert-grid">
     {certs.map((cert) => (
       <div class:list={['cert-item', { 'cert-item--pending': cert.data.status === 'in-progress' }]}>
         {cert.data.badge_image
-          ? <img src={cert.data.badge_image} alt={cert.data.name} class="cert-badge-img" width="36" height="36" />
+          ? <img src={cert.data.badge_image} alt={cert.data.name} class="cert-badge-img" width="44" height="44" />
           : <div class="cert-badge-placeholder"></div>
         }
         <div class="cert-info">
@@ -35,32 +35,32 @@ const certs = allCerts.sort((a, b) => a.data.order - b.data.order);
   .cert-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    gap: 10px;
   }
   .cert-item {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 14px;
     background: var(--bg-surface);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 10px 12px;
+    border-radius: 10px;
+    padding: 14px 16px;
   }
   .cert-item--pending { opacity: 0.55; }
   .cert-badge-img {
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
     flex-shrink: 0;
-    border-radius: 6px;
+    border-radius: 8px;
     object-fit: contain;
   }
   .cert-badge-placeholder {
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
     flex-shrink: 0;
     background: var(--bg-hover);
     border: 1px dashed var(--border);
-    border-radius: 6px;
+    border-radius: 8px;
   }
   .cert-info {
     display: flex;

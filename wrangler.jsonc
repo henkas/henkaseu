@@ -1,0 +1,40 @@
+/**
+ * Cloudflare Workers config for henkas.eu + apps.henkas.eu.
+ *
+ * Deploys to the "Sewer Rats" Cloudflare account (account_id below) — make
+ * sure you're authenticated as a user who has access to that account before
+ * running `wrangler deploy`.
+ *
+ * Static assets live in ./dist (built by `astro build`).
+ * The Worker entry (src/worker.ts) handles:
+ *   - WebFinger response for henkas.eu
+ *   - Rewriting apps.henkas.eu/* -> /apps/* before falling through to assets
+ *   - Blocking /apps/* on henkas.eu so the apps site stays subdomain-only
+ *
+ * Both custom domains must be removed from the existing Cloudflare Pages
+ * project before the first `wrangler deploy` will succeed; see DEPLOYMENT.md.
+ */
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "henkas-eu",
+	"account_id": "19e3c57078ceab1f298c169ef0f5e271",
+	"main": "src/worker.ts",
+	"compatibility_date": "2025-09-01",
+	"assets": {
+		"directory": "./dist",
+		"binding": "ASSETS",
+		"not_found_handling": "404-page",
+		"html_handling": "auto-trailing-slash",
+		// The Worker MUST run before assets are matched because routing depends
+		// on the hostname (henkas.eu vs apps.henkas.eu): the same path resolves
+		// to different files depending on which subdomain served the request.
+		"run_worker_first": true
+	},
+	"routes": [
+		{ "pattern": "henkas.eu", "custom_domain": true },
+		{ "pattern": "apps.henkas.eu", "custom_domain": true }
+	],
+	"observability": {
+		"enabled": true
+	}
+}

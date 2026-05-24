@@ -1,0 +1,64 @@
+---
+import AppsBase from '../../layouts/AppsBase.astro';
+---
+
+<AppsBase
+  title="Terms of Service — Apps by Henki Papp"
+  description="Terms of Service for apps published by Henki Papp."
+>
+  <article class="legal-page">
+    <h1 class="legal-title">Terms of Service</h1>
+    <p class="legal-effective">Last updated: TBD</p>
+
+    <p class="legal-placeholder">
+      Full Terms of Service text is being written and will appear here soon. In the
+      meantime, please reach out to <a href="mailto:henkas@henkas.eu">henkas@henkas.eu</a>
+      with any questions about the apps published on this site.
+    </p>
+  </article>
+</AppsBase>
+
+<style>
+  .legal-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 0 60px;
+  }
+
+  .legal-title {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.6px;
+    margin: 0 0 8px;
+  }
+
+  .legal-effective {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin: 0 0 32px;
+  }
+
+  .legal-placeholder {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    padding: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  .legal-placeholder a {
+    color: var(--accent-light);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+  }
+
+  .legal-placeholder a:hover {
+    text-decoration-color: var(--accent-light);
+  }
+</style>

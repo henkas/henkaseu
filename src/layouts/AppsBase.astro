@@ -1,0 +1,79 @@
+---
+import AppsNav from '../components/AppsNav.astro';
+import AppsFooter from '../components/AppsFooter.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = 'Apps by Henki Papp',
+  description = 'Personal apps published by Henki Papp.',
+  ogImage = '/og-image.png',
+} = Astro.props;
+
+// On disk the apps pages live under /apps/, but they're served on the
+// apps.henkas.eu subdomain at the bare path. Strip the /apps prefix so
+// canonical / OG URLs reflect the public URL the user actually sees.
+const APPS_SITE = 'https://apps.henkas.eu';
+const publicPath = Astro.url.pathname.replace(/^\/apps(?=\/|$)/, '') || '/';
+const canonicalURL = new URL(publicPath, APPS_SITE);
+const ogImageURL = new URL(ogImage, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+  </head>
+  <body>
+    <AppsNav />
+    <main class="apps-main">
+      <slot />
+    </main>
+    <AppsFooter />
+  </body>
+</html>
+
+<style is:global>
+  .apps-main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 20px 0;
+  }
+
+  @media (max-width: 600px) {
+    .apps-main {
+      padding: 40px 16px 0;
+    }
+  }
+</style>

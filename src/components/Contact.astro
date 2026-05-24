@@ -15,22 +15,21 @@ const instagram = 'https://instagram.com/henkyfen';
       <div class="form-field">
         <label for="cf-email" class="form-label">Your email</label>
         <input id="cf-email" name="email" type="email" class="form-input"
-          placeholder="you@example.com" required />
+          placeholder="you@example.com" required disabled />
       </div>
       <div class="form-field">
         <label for="cf-subject" class="form-label">Subject</label>
         <input id="cf-subject" name="subject" type="text" class="form-input"
-          placeholder="What's on your mind?" required />
+          placeholder="What's on your mind?" required disabled />
       </div>
     </div>
     <div class="form-field">
       <label for="cf-message" class="form-label">Message</label>
       <textarea id="cf-message" name="message" class="form-input form-textarea"
-        placeholder="Tell me more…" rows="3" required></textarea>
+        placeholder="Tell me more…" rows="3" required disabled></textarea>
     </div>
     <div class="form-actions">
-      <button type="submit" class="btn-primary form-submit">Send message</button>
-      <p id="form-status" class="form-status"></p>
+      <button type="submit" class="btn-primary form-submit" disabled>Send message</button>
     </div>
   </form>
 
@@ -64,45 +63,6 @@ const instagram = 'https://instagram.com/henkyfen';
     </a>
   </div>
 </div>
-
-<script>
-  const form      = document.getElementById('contact-form') as HTMLFormElement | null;
-  const status    = document.getElementById('form-status') as HTMLElement | null;
-  const submitBtn = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
-
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (!submitBtn) return;
-
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Sending…';
-    if (status) { status.textContent = ''; status.className = 'form-status'; }
-
-    try {
-      const res  = await fetch('/api/contact', { method: 'POST', body: new FormData(form) });
-      const data = await res.json() as { ok: boolean; error?: string };
-
-      if (data.ok) {
-        form.reset();
-        if (status) {
-          status.textContent = "Message sent — I'll get back to you soon.";
-          status.className = 'form-status form-status--ok';
-        }
-      } else {
-        throw new Error(data.error ?? 'Unknown error');
-      }
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Something went wrong.';
-      if (status) {
-        status.textContent = msg;
-        status.className = 'form-status form-status--err';
-      }
-    } finally {
-      submitBtn.textContent = 'Send message';
-      submitBtn.disabled = false;
-    }
-  });
-</script>
 
 <style>
   .contact-tile {
@@ -170,6 +130,11 @@ const instagram = 'https://instagram.com/henkyfen';
   .form-input::placeholder { color: var(--text-muted); }
   .form-input:focus { border-color: var(--accent); }
 
+  .form-input:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
   .form-textarea {
     resize: vertical;
     min-height: 72px;
@@ -181,13 +146,10 @@ const instagram = 'https://instagram.com/henkyfen';
     gap: 14px;
   }
 
-  .form-status {
-    font-size: 12px;
-    margin: 0;
+  .form-submit:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
   }
-
-  .form-status--ok  { color: var(--color-active); }
-  .form-status--err { color: #f87171; }
 
   /* Divider + links row */
   .contact-divider {

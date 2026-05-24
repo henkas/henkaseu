@@ -1,0 +1,60 @@
+---
+import { appsUrl } from '../lib/urls';
+---
+
+<footer class="apps-footer">
+  <div class="apps-footer-inner">
+    <div class="apps-footer-links">
+      <a href={appsUrl('/terms-of-service')}>Terms of Service</a>
+      <span class="apps-footer-sep">·</span>
+      <a href={appsUrl('/privacy-policy')}>Privacy Policy</a>
+    </div>
+    <div class="apps-footer-copyright">
+      © 2026 Henki Papp
+    </div>
+  </div>
+</footer>
+
+<style>
+  .apps-footer {
+    margin-top: 80px;
+    padding: 32px 20px 48px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .apps-footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .apps-footer-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+  }
+
+  .apps-footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .apps-footer-links a:hover {
+    color: var(--text-primary);
+  }
+
+  .apps-footer-sep {
+    color: var(--text-faint);
+  }
+
+  .apps-footer-copyright {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+</style>

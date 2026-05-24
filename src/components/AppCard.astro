@@ -1,0 +1,177 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { appsUrl } from '../lib/urls';
+
+interface Props {
+  app: CollectionEntry<'apps'>;
+}
+
+const { app } = Astro.props;
+const { name, tagline, status, icon, platforms } = app.data;
+
+const statusLabel: Record<string, string> = {
+  live: 'Live',
+  beta: 'Beta',
+  'coming-soon': 'Coming Soon',
+};
+---
+
+<a href={appsUrl(`/${app.slug}`)} class="app-card">
+  <div class="app-card-icon">
+    {icon ? (
+      <img src={icon} alt={`${name} icon`} />
+    ) : (
+      <div class="app-card-icon-placeholder">{name.slice(0, 1)}</div>
+    )}
+  </div>
+
+  <div class="app-card-body">
+    <div class="app-card-row">
+      <h2 class="app-card-name">{name}</h2>
+      <span class={`app-card-status app-card-status--${status}`}>
+        {statusLabel[status]}
+      </span>
+    </div>
+    <p class="app-card-tagline">{tagline}</p>
+    {platforms.length > 0 && (
+      <div class="app-card-platforms">
+        {platforms.map((p) => <span class="tag">{p}</span>)}
+      </div>
+    )}
+  </div>
+
+  <span class="app-card-chevron" aria-hidden="true">→</span>
+</a>
+
+<style>
+  .app-card {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    align-items: center;
+    gap: 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+
+  .app-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  .app-card-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .app-card-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .app-card-icon-placeholder {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent-light);
+    letter-spacing: -0.5px;
+  }
+
+  .app-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .app-card-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .app-card-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+    margin: 0;
+  }
+
+  .app-card-status {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 20px;
+  }
+
+  .app-card-status--live {
+    background: color-mix(in srgb, var(--color-active) 18%, transparent);
+    color: var(--color-active);
+  }
+
+  .app-card-status--beta {
+    background: color-mix(in srgb, var(--accent-light) 18%, transparent);
+    color: var(--accent-light);
+  }
+
+  .app-card-status--coming-soon {
+    background: var(--border);
+    color: var(--text-secondary);
+  }
+
+  .app-card-tagline {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .app-card-platforms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 2px;
+  }
+
+  .app-card-chevron {
+    font-size: 18px;
+    color: var(--text-muted);
+    transition: color 0.15s, transform 0.15s;
+  }
+
+  .app-card:hover .app-card-chevron {
+    color: var(--accent-light);
+    transform: translateX(2px);
+  }
+
+  @media (max-width: 600px) {
+    .app-card {
+      grid-template-columns: 56px 1fr;
+      padding: 16px 18px;
+      gap: 16px;
+    }
+    .app-card-chevron {
+      display: none;
+    }
+    .app-card-icon {
+      width: 56px;
+      height: 56px;
+    }
+  }
+</style>

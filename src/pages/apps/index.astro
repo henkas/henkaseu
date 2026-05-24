@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+import AppsBase from '../../layouts/AppsBase.astro';
+import AppCard from '../../components/AppCard.astro';
+
+const apps = (await getCollection('apps')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<AppsBase
+  title="Apps by Henki Papp"
+  description="A small collection of apps I personally build and publish."
+>
+  <section class="apps-hero">
+    <h1 class="apps-hero-title">Apps by Henki Papp</h1>
+    <p class="apps-hero-subtitle">Small things I build and ship.</p>
+  </section>
+
+  <section class="apps-list">
+    {apps.map((app) => <AppCard app={app} />)}
+  </section>
+</AppsBase>
+
+<style>
+  .apps-hero {
+    padding: 40px 0 56px;
+    text-align: center;
+  }
+
+  .apps-hero-title {
+    font-size: 44px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -1px;
+    margin: 0;
+    background: linear-gradient(135deg, var(--accent-light), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .apps-hero-subtitle {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin: 12px 0 0;
+  }
+
+  .apps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-bottom: 40px;
+  }
+
+  @media (max-width: 600px) {
+    .apps-hero {
+      padding: 24px 0 36px;
+    }
+    .apps-hero-title {
+      font-size: 32px;
+    }
+  }
+</style>

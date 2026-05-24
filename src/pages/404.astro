@@ -1,0 +1,70 @@
+---
+import Base from '../layouts/Base.astro';
+import '../styles/global.css';
+---
+
+<Base
+  title="Not found — henkas.eu"
+  description="The page you're looking for doesn't exist."
+>
+  <main class="notfound-main">
+    <div class="notfound-box">
+      <p class="notfound-code">404</p>
+      <h1 class="notfound-title">Lost the trail.</h1>
+      <p class="notfound-body">The page you're looking for doesn't exist, or it moved without leaving a forwarding address.</p>
+      <div class="notfound-actions">
+        <a href="/" class="btn-primary">Back to henkas.eu</a>
+        <a href="https://apps.henkas.eu/" class="btn-ghost">Apps</a>
+      </div>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .notfound-main {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+  }
+
+  .notfound-box {
+    max-width: 480px;
+    text-align: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 48px 36px;
+  }
+
+  .notfound-code {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+    font-size: 14px;
+    letter-spacing: 4px;
+    color: var(--accent-light);
+    margin: 0 0 18px;
+  }
+
+  .notfound-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+    margin: 0 0 12px;
+  }
+
+  .notfound-body {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0 0 28px;
+  }
+
+  .notfound-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+</style>

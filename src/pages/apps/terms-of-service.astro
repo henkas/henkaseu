@@ -1,64 +1,217 @@
 ---
 import AppsBase from '../../layouts/AppsBase.astro';
+import { Content, frontmatter } from '../../legal/terms-of-service.md';
 ---
 
 <AppsBase
-  title="Terms of Service — Apps by Henki Papp"
+  title={`${frontmatter.title} — Apps by Henki Papp`}
   description="Terms of Service for apps published by Henki Papp."
 >
   <article class="legal-page">
-    <h1 class="legal-title">Terms of Service</h1>
-    <p class="legal-effective">Last updated: TBD</p>
+    <header class="legal-header">
+      <h1 class="legal-title">{frontmatter.title}</h1>
+      <dl class="legal-dates">
+        <div>
+          <dt>Last updated</dt>
+          <dd>{frontmatter.lastUpdated}</dd>
+        </div>
+        <div>
+          <dt>Effective</dt>
+          <dd>{frontmatter.effectiveDate}</dd>
+        </div>
+      </dl>
+    </header>
 
-    <p class="legal-placeholder">
-      Full Terms of Service text is being written and will appear here soon. In the
-      meantime, please reach out to <a href="mailto:henkas@henkas.eu">henkas@henkas.eu</a>
-      with any questions about the apps published on this site.
-    </p>
+    <div class="legal-prose">
+      <Content />
+    </div>
   </article>
 </AppsBase>
 
 <style>
   .legal-page {
-    max-width: 720px;
+    max-width: 760px;
     margin: 0 auto;
-    padding: 40px 0 60px;
+    padding: 40px 0 80px;
+  }
+
+  .legal-header {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border-subtle);
   }
 
   .legal-title {
-    font-size: 36px;
+    font-size: 40px;
     font-weight: 800;
     color: var(--text-primary);
-    letter-spacing: -0.6px;
-    margin: 0 0 8px;
+    letter-spacing: -0.8px;
+    margin: 0 0 18px;
+    line-height: 1.1;
   }
 
-  .legal-effective {
+  .legal-dates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    margin: 0;
+  }
+
+  .legal-dates > div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .legal-dates dt {
     font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
-    font-size: 11px;
-    letter-spacing: 1px;
-    color: var(--text-muted);
+    font-size: 10px;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
-    margin: 0 0 32px;
+    color: var(--text-muted);
+    margin: 0;
   }
 
-  .legal-placeholder {
-    font-size: 15px;
+  .legal-dates dd {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+    font-size: 13px;
     color: var(--text-secondary);
-    line-height: 1.75;
-    padding: 24px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
+    margin: 0;
   }
 
-  .legal-placeholder a {
+  .legal-prose {
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  .legal-prose :global(h2) {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+    margin: 44px 0 14px;
+    padding-left: 14px;
+    border-left: 3px solid var(--accent);
+  }
+
+  .legal-prose :global(h3) {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 28px 0 10px;
+  }
+
+  .legal-prose :global(p) {
+    margin: 0 0 16px;
+  }
+
+  .legal-prose :global(strong) {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .legal-prose :global(em) {
+    color: var(--text-secondary);
+  }
+
+  .legal-prose :global(a) {
     color: var(--accent-light);
     text-decoration: underline;
     text-decoration-color: var(--border);
+    word-break: break-word;
   }
 
-  .legal-placeholder a:hover {
+  .legal-prose :global(a:hover) {
     text-decoration-color: var(--accent-light);
+  }
+
+  .legal-prose :global(ul),
+  .legal-prose :global(ol) {
+    padding-left: 22px;
+    margin: 0 0 16px;
+  }
+
+  .legal-prose :global(li) {
+    margin-bottom: 6px;
+  }
+
+  .legal-prose :global(li > p) {
+    margin: 0;
+  }
+
+  .legal-prose :global(hr) {
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    margin: 36px 0;
+  }
+
+  .legal-prose :global(blockquote) {
+    border-left: 3px solid var(--accent-light);
+    background: var(--bg-surface);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 20px;
+    margin: 0 0 20px;
+    color: var(--text-secondary);
+  }
+
+  .legal-prose :global(blockquote p) {
+    margin: 0 0 10px;
+  }
+
+  .legal-prose :global(blockquote p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .legal-prose :global(code) {
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+    font-size: 12.5px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--accent-light);
+  }
+
+  .legal-prose :global(table) {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 24px;
+    font-size: 13.5px;
+  }
+
+  .legal-prose :global(thead) {
+    background: var(--bg-surface);
+  }
+
+  .legal-prose :global(th),
+  .legal-prose :global(td) {
+    text-align: left;
+    vertical-align: top;
+    padding: 10px 14px;
+    border: 1px solid var(--border-subtle);
+  }
+
+  .legal-prose :global(th) {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .legal-prose :global(td) {
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 600px) {
+    .legal-page {
+      padding: 24px 0 60px;
+    }
+    .legal-title {
+      font-size: 30px;
+    }
+    .legal-prose :global(h2) {
+      font-size: 19px;
+    }
   }
 </style>

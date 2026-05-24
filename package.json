@@ -6,6 +6,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "check": "astro check",
+    "dev:worker": "wrangler dev",
+    "deploy": "astro build && wrangler deploy",
+    "deploy:dry-run": "astro build && wrangler deploy --dry-run",
     "astro": "astro"
   },
   "dependencies": {
@@ -15,6 +19,8 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
-    "typescript": "^5.9.3"
+    "@cloudflare/workers-types": "^4.20260523.1",
+    "typescript": "^5.9.3",
+    "wrangler": "^4.94.0"
   }
 }

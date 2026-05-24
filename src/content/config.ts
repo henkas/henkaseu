@@ -62,4 +62,32 @@ const certifications = defineCollection({
   }),
 });
 
-export const collections = { projects, work, certifications };
+// A link is either a live URL or the literal "coming-soon" sentinel,
+// which the renderer turns into a disabled "Coming Soon" badge.
+const appLink = z.union([z.string().url(), z.literal('coming-soon')]);
+
+const apps = defineCollection({
+  type: 'content',
+  schema: z.object({
+    name: z.string(),
+    tagline: z.string(),
+    status: z.enum(['live', 'beta', 'coming-soon']),
+    icon: z.string().optional(),
+    platforms: z
+      .array(z.enum(['iOS', 'iPadOS', 'Android', 'Web', 'macOS', 'Windows', 'Linux']))
+      .default([]),
+    license: z.string().optional(),
+    order: z.number(),
+    date: z.string(), // YYYY-MM
+    links: z
+      .object({
+        appStore: appLink.optional(),
+        googlePlay: appLink.optional(),
+        web: z.string().url().optional(),
+        github: z.string().url().optional(),
+      })
+      .optional(),
+  }),
+});
+
+export const collections = { projects, work, certifications, apps };

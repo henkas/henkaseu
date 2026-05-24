@@ -4,10 +4,11 @@ This file provides working instructions for coding agents in this repository.
 
 ## Project
 
-- Personal portfolio site for Henki Papp at `henkas.eu`
+- Personal portfolio at `henkas.eu` plus a small apps subsite at `apps.henkas.eu`
 - Stack: Astro, Tailwind CSS, Astro Content Collections
-- Deployment target: Cloudflare Pages
+- Hosting: Cloudflare Workers + Static Assets (one Worker serves both domains)
 - Primary product/design spec: `docs/superpowers/specs/2026-03-23-henkas-eu-design.md`
+- Deployment and CI/CD setup: `DEPLOYMENT.md`
 
 ## Source Of Truth
 
@@ -22,20 +23,31 @@ The design spec is authoritative for structure, content model, and visual rules.
 ## Commands
 
 ```bash
-npm run dev
-npm run build
-npm run preview
-npx astro check
+npm run dev              # Astro dev server (localhost:4321)
+npm run dev:worker       # Worker locally via wrangler (localhost:8787)
+npm run build            # astro build -> dist/
+npm run check            # astro check (TypeScript)
+npm run deploy           # build + wrangler deploy
+npm run deploy:dry-run   # build + validate wrangler.jsonc
 ```
 
-Build output is `dist/`. Cloudflare Pages should use `astro build`.
+Build output is `dist/`. The Worker entry is `src/worker.ts`; the worker handles hostname-based routing (henkas.eu vs apps.henkas.eu) and delegates static content to the `ASSETS` binding.
 
 ## Architecture
 
-The site has two routes only:
+Main site (`henkas.eu`):
 
 - `/` -> `src/pages/index.astro`
 - `/projects/[slug]` -> `src/pages/projects/[slug].astro`
+- `/.well-known/webfinger` -> handled in `src/worker.ts`
+
+Apps subsite (`apps.henkas.eu`), built under `src/pages/apps/`:
+
+- `apps.henkas.eu/` -> apps index (`src/pages/apps/index.astro`)
+- `apps.henkas.eu/<appname>` -> per-app landing page (`src/pages/apps/[appname].astro`)
+- `apps.henkas.eu/terms-of-service` and `/privacy-policy` -> placeholder legal pages
+
+The worker rewrites incoming `apps.henkas.eu/<path>` to `/apps/<path>/` before fetching from `env.ASSETS`. Internal apps-subsite links go through the `appsUrl()` helper in `src/lib/urls.ts` to stay clean on the public URL while still working in `astro dev`.
 
 Implementation rules:
 
@@ -82,11 +94,32 @@ tags: string[]
 order: number
 ```
 
+Apps live in `src/content/apps/*.md`.
+
+Required app frontmatter:
+
+```yaml
+name: string
+tagline: string
+status: live | beta | coming-soon
+order: number
+date: YYYY-MM
+platforms: [iOS | iPadOS | Android | Web | macOS | Windows | Linux]
+license: string?
+icon: string?
+links:
+  appStore: url | "coming-soon"
+  googlePlay: url | "coming-soon"
+  web: url?
+  github: url?
+```
+
 Content rules:
 
 - Exactly one project should have `featured: true`
-- `order: 1` is the most recent work entry
-- Add new projects and jobs through content collection entries, not hardcoded page data
+- `order: 1` is the most recent work entry; apps are ordered by `order` ascending
+- App-store links use the literal `"coming-soon"` to render a disabled badge instead of a live link
+- Add new projects, jobs, and apps through content collection entries, not hardcoded page data
 
 ## Design System
 
@@ -100,15 +133,15 @@ Hard rules:
 - Keep typography aligned with the spec: Inter, strong headings, tight letter-spacing, small uppercase metadata, monospace tech pills
 - Preserve the minimal-JS static-first approach
 
-Key tokens called out in the current spec:
+Key tokens as currently defined in `src/styles/global.css`:
 
-- `--bg-page: #0a0a0f`
-- `--bg-card: #111116`
-- `--bg-surface: #16161f`
+- `--bg-page: #181828`
+- `--bg-card: #242440`
+- `--bg-surface: #1e1e30`
 - `--accent: #7b68ee`
-- `--accent-light: #a78bfa`
-- `--text-secondary: #8888aa`
-- `--text-muted: #7777aa`
+- `--accent-light: #b4a0ff`
+- `--text-secondary: #c8cde0`
+- `--text-muted: #a0a0c8`
 
 ## Layout Rules
 
@@ -148,4 +181,4 @@ Photography section:
 
 ## Current Repo State
 
-This workspace currently contains planning and design documents but little or no implementation code. If you scaffold or add source files, follow the structure defined in the design spec and `CLAUDE.md` rather than inventing a new layout.
+The main portfolio and the apps subsite are both implemented. New work should extend the existing structure (add a page, add a content collection entry, add a component) rather than reorganize layouts or introduce new routing patterns. See `CLAUDE.md` for the current implementation map and `DEPLOYMENT.md` for the deploy + CI/CD model.

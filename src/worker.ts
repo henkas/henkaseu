@@ -22,15 +22,12 @@ export interface Env {
 const APPS_HOSTNAME = 'apps.henkas.eu';
 const HAS_EXTENSION = /\.[a-z0-9]+$/i;
 
-const WEBFINGER_RESPONSE = {
-	subject: 'acct:admin@henkas.eu',
-	links: [
-		{
-			rel: 'http://openid.net/specs/connect/1.0/issuer',
-			href: 'https://auth.henkas.eu',
-		},
-	],
-};
+// OIDC issuer for the henkas.eu tailnet (authentik, per-application issuer).
+// Tailscale requires this href to match the `issuer` in
+// https://auth.henkas.eu/application/o/tailscale/.well-known/openid-configuration
+// exactly, trailing slash included.
+const OIDC_ISSUER = 'https://auth.henkas.eu/application/o/tailscale/';
+const WEBFINGER_ACCT = /^acct:[^@]+@henkas\.eu$/i;
 
 function effectiveHost(request: Request, url: URL): string {
 	const header = request.headers.get('host');
@@ -42,8 +39,23 @@ function isLocalHost(hostname: string): boolean {
 	return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '0.0.0.0';
 }
 
-function webfingerResponse(): Response {
-	return new Response(JSON.stringify(WEBFINGER_RESPONSE, null, 2), {
+function webfingerResponse(url: URL): Response {
+	// Per RFC 7033 the subject echoes the queried resource; anything outside
+	// acct:*@henkas.eu is not ours to answer for.
+	const resource = url.searchParams.get('resource') ?? '';
+	if (!WEBFINGER_ACCT.test(resource)) {
+		return new Response('Not found', { status: 404 });
+	}
+	const body = {
+		subject: resource,
+		links: [
+			{
+				rel: 'http://openid.net/specs/connect/1.0/issuer',
+				href: OIDC_ISSUER,
+			},
+		],
+	};
+	return new Response(JSON.stringify(body, null, 2), {
 		status: 200,
 		headers: {
 			'Content-Type': 'application/jrd+json',
@@ -77,7 +89,7 @@ export default {
 		}
 
 		if (url.pathname === '/.well-known/webfinger') {
-			return webfingerResponse();
+			return webfingerResponse(url);
 		}
 
 		if (url.pathname.startsWith('/apps') && !isLocalHost(host)) {
